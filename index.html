@@ -45,6 +45,79 @@
             background-color: #02c17b !important;
         }
         
+        .popup {
+            z-index: 998;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            display: none;
+            transform: translate(-50%, -50%);
+        }
+        
+        .signupBox {
+            top: 50%;
+            margin: 15% auto auto auto;
+            width: 12%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 40%;
+            border-radius: 10px;
+            background-color: #4b4a6c;
+            border: 5px solid #4b4a6c;
+            color: #fafafa;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .signupBox input {
+            width: 90%;
+            height: 40px;
+            margin-left: 5%;
+            font-size: 14;
+            border-radius: 5px;
+            border: 1px solid lightgrey;
+            box-shadow: 1px 1px 1px 1px black;
+        }
+        
+        .signupBox a {
+            color: #fafafa;
+            padding-left: 6%;
+            padding-bottom: 5px;
+        }
+        
+        .signupBox h3 {
+            text-shadow: 1px 1px 1px black;
+            text-align: center;
+        }
+        
+        .signupBox button {
+            color: #fafafa;
+            width: 80%;
+            align-self: center;
+            margin-bottom: 5%;
+            height: 40px;
+            border: 1px solid black;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #1daa5c;
+            transition: width 0.2s;
+        }
+        
+        .signupBox button:hover {
+            outline: none;
+            cursor: pointer;
+            background-color: #21c76b;
+            width: 82%;
+            
+        }
+        
+        .signupBox button:focus {
+            outline: none;
+            background-color: #21bc66;
+        }
+        
     </style>
     <script>
         function signout(){
@@ -55,7 +128,24 @@
         
         function testUser(){
             localStorage.setItem('currentUser', 'test');
+            console.log("user");
             setup();
+        }
+        
+        function openSignupBox() {
+            var popup = document.getElementById("popup")
+            popup.style.display = "block";
+            popup.style.background = "rgba(0, 0, 0, 0.2)";
+        }
+        
+        function closeSignupBox() {
+            var popup = document.getElementById("popup")
+            popup.style.display = "none";
+            popup.style.background = "rgba(0, 0, 0, 0)";
+        }
+        
+        function signup() {
+            closeSignupBox();
         }
         
         function setup(){
@@ -64,6 +154,7 @@
                 
                 nList.childNodes[3].innerHTML = "<a href=\"javascript:void(0);\">Sign Out</a>";
                 nList.childNodes[3].setAttribute('id', 'Signout');
+                nList.childNodes[3].removeEventListener("click", openSignupBox);
                 nList.childNodes[3].addEventListener("click", signout);
                 
                 if (nList.childNodes[5] != null){
@@ -73,9 +164,10 @@
             else {
                 var nList = document.getElementById("navlist");
                 
-                nList.childNodes[3].innerHTML = "<a href=\"SignupPage.html\">Sign Up</a>";
+                nList.childNodes[3].innerHTML = "<a href=\"javascript:void(0);\">Sign Up</a>";
                 nList.childNodes[3].setAttribute('id', 'Signup');
                 nList.childNodes[3].removeEventListener("click", signout);
+                nList.childNodes[3].addEventListener("click", openSignupBox);
                 
                 var login = document.createElement("li");
                 login.setAttribute('style', 'float:right');
@@ -92,8 +184,37 @@
     <div class="navbar">
         <ul id="navlist">
             <li class="active"><a href="index.html" id="Home">Home</a></li>
-            <li style="float:right" id="Signup"><a href="SignupPage.html">Sign Up</a></li>
+            <li style="float:right" id="Signup"><a onClick="testUser()">Sign Up</a></li>
         </ul>
     </div>
     <button onClick="testUser()">Test User</button>
+    
+    
+    
+    
+    
+    
+    <!-- Signup Popup Box -->
+    <div class="popup" id="popup">
+        <div class="signupBox">
+            <a style="text-align: right; text-decoration: none" href="javascript:void(0);" onClick="closeSignupBox()">x</a>
+            <h3>Sign Up</h3>
+            <a>First Name</a>
+            <input type="text" placeholder="John"/>
+            <br>
+            <a>Last Name</a>
+            <input type="text" placeholder="Edwards"/>
+            <br>
+            <a>Email</a>
+            <input type="text" placeholder="john.e@gmail.com"/>
+            <br>
+            <a>Phone Number</a>
+            <input type="text" placeholder="0455493110"/>
+            <br>
+            <a>Password</a>
+            <input type="password" placeholder="Enter 6+ Characters"/>
+            <br>
+            <button onclick="signup()">Sign Up</button>
+        </div>
+    </div>
 </body>
