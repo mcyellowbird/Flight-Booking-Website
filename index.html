@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
@@ -45,7 +46,7 @@
             background-color: #02c17b !important;
         }
         
-        .popup {
+        .popupIn {
             z-index: 998;
             position: fixed;
             width: 100%;
@@ -53,17 +54,54 @@
             top: 50%;
             left: 50%;
             display: none;
+            visibility: visible;
             transform: translate(-50%, -50%);
+            animation: fadeIn .5s;
+        }
+        
+        .popupOut {z-index: -5;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, -50%);
+            animation: fadeOut .5s;
+        }
+        
+        .back {
+            z-index: -4;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes fadeIn{
+            0% {opacity: 0;}
+            100% {opacity: 1; visibility: visible; z-index: 998;}
+        }
+        @keyframes fadeOut{
+            0% {opacity: 1; visibility: visible; z-index: 998;}
+            100% {opacity: 0; visibility: hidden; z-index: -5;}
         }
         
         .signupBox {
-            top: 50%;
-            margin: 15% auto auto auto;
-            width: 12%;
+            z-index: 2;
+            
+            width: 350px;
+            height: 430px;
+            
+            margin: auto;
+            margin-top: 15%;
+            
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            height: 40%;
+            align-items: center;
+            flex-direction: column;
+            
             border-radius: 10px;
             background-color: #4b4a6c;
             border: 5px solid #4b4a6c;
@@ -71,85 +109,191 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
         
-        .signupBox input {
-            width: 90%;
+        input {
+            width: 300px;
             height: 40px;
-            margin-left: 5%;
-            font-size: 14;
+            font-size: 14px;
             border-radius: 5px;
+            border: none;
+            outline: none;
             border: 1px solid lightgrey;
             box-shadow: 1px 1px 1px 1px black;
         }
         
-        .signupBox a {
+        input:focus {
+            border: 1px solid black;
+        }
+        
+        a {
             color: #fafafa;
             padding-left: 6%;
             padding-bottom: 5px;
         }
         
-        .signupBox h3 {
+        h3 {
             text-shadow: 1px 1px 1px black;
             text-align: center;
         }
         
-        .signupBox button {
+        button {
             color: #fafafa;
-            width: 80%;
-            align-self: center;
-            margin-bottom: 5%;
+            width: 250px;
             height: 40px;
             border: 1px solid black;
+            margin-bottom: 10px;
             border-radius: 10px;
             font-size: 16px;
             background-color: #1daa5c;
             transition: width 0.2s;
         }
         
-        .signupBox button:hover {
+        button:hover {
             outline: none;
             cursor: pointer;
             background-color: #21c76b;
-            width: 82%;
+            width: 280px;
             
         }
         
-        .signupBox button:focus {
+        button:focus {
             outline: none;
             background-color: #21bc66;
         }
         
-    </style>
-    <script>
-        function signout(){
-            localStorage.clear('currentUser');
-            console.log(localStorage.currentUser);
-            setup();
+        
+        .loginBox {
+            z-index: 2;
+            
+            width: 350px;
+            height: 250px;
+            
+            margin: auto;
+            margin-top: 15%;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            
+            border-radius: 10px;
+            background-color: #4b4a6c;
+            border: 5px solid #4b4a6c;
+            color: #fafafa;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
         
-        function testUser(){
-            localStorage.setItem('currentUser', 'test');
-            console.log("user");
+    </style>
+    <script>
+        
+        var activeUser = localStorage.getItem('currentUser');
+        
+        function signout(){
+            localStorage.removeItem('currentUser');
             setup();
         }
         
         function openSignupBox() {
-            var popup = document.getElementById("popup")
+            var popup = document.getElementById("popupSignout")
+            popup.className = "popupIn";
             popup.style.display = "block";
-            popup.style.background = "rgba(0, 0, 0, 0.2)";
         }
         
         function closeSignupBox() {
-            var popup = document.getElementById("popup")
-            popup.style.display = "none";
-            popup.style.background = "rgba(0, 0, 0, 0)";
+            var popup = document.getElementById("popupSignout")
+            popup.className = "popupOut";
         }
         
         function signup() {
-            closeSignupBox();
+            
+            var fN = document.getElementById("firstNameInput");
+            
+            var lN = document.getElementById("lastNameInput");
+            
+            var e = document.getElementById("emailInputSignup");
+            
+            var pH = document.getElementById("phoneNumberInput");
+            
+            var p = document.getElementById("passwordInputSignup");
+            
+            if (fN.value == "" || lN.value == "" || e == "" || pH == "" || p.value.length <= 6){
+                alert("Invalid input\n\nMake sure you have filled out each section and your password has more than 6 characters");
+            }
+            
+            else{  
+                var user = {};
+                user.userID = (Math.floor(Math.random() * 999999) + 100000);
+                user.firstName = fN.value;
+                user.lastName = lN.value;
+                user.email = e.value;
+                user.phoneNumber = pH.value;
+                user.password = p.value;
+                user.bookedFlights = [];
+            
+                localStorage.currentUser = JSON.stringify(user);
+
+                var users = [];
+
+                if (localStorage.userList){
+                    var users = JSON.parse(localStorage.userList);
+                    users.push(JSON.parse(localStorage.currentUser));
+                    localStorage.userList = JSON.stringify(users);
+                }
+                else{
+                    users.push(JSON.parse(localStorage.currentUser));
+                    localStorage.userList = JSON.stringify(users);
+                }
+
+                fN.value = "";
+                lN.value = "";
+                e.value = "";
+                pH.value = "";
+                p.value = "";
+
+                closeSignupBox();
+                setup();
+            }
+        }
+        
+        function openLoginBox() {
+            var popup = document.getElementById("popupLogin")
+            popup.className = "popupIn";
+            popup.style.display = "block";
+        }
+        
+        function closeLoginBox() {
+            var popup = document.getElementById("popupLogin")
+            popup.className = "popupOut";
+        }
+        
+        function loginAccount() {
+            var e = document.getElementById("emailInputLogin");
+            var p = document.getElementById("passwordInputLogin");
+            
+            if (e.value == "" || p.value == ""){
+                alert("Invalid input\n\nBoth sections need to be filled in to login to an account")
+            }
+            else{
+                var users = [];
+                var foundUser = false;
+                users = JSON.parse(localStorage.userList);
+
+                for (var i = 0; i < users.length; i++){
+                    if (users[i].email == e.value && users[i].password == p.value){
+                        localStorage.currentUser = JSON.stringify(users[i]);
+                        foundUser = true;
+                        closeLoginBox();
+                        setup();
+                        break;
+                    }
+                }
+                if (foundUser == false){
+                    alert("Error\n\nIncorrect Email or Password.\nCheck your entries and try again")
+                }
+            }
         }
         
         function setup(){
-            if (localStorage.getItem('currentUser') != null){
+            if (localStorage.currentUser != null){
                 var nList = document.getElementById("navlist");
                 
                 nList.childNodes[3].innerHTML = "<a href=\"javascript:void(0);\">Sign Out</a>";
@@ -172,7 +316,8 @@
                 var login = document.createElement("li");
                 login.setAttribute('style', 'float:right');
                 login.setAttribute('id', 'Login');
-                login.innerHTML = "<a href=\"LoginPage.html\">Log In</a>";
+                login.innerHTML = "<a href=\"javascript:void(0)\">Log In</a>";
+                login.addEventListener("click", openLoginBox);
                 
                 nList.appendChild(login);
             }
@@ -184,10 +329,9 @@
     <div class="navbar">
         <ul id="navlist">
             <li class="active"><a href="index.html" id="Home">Home</a></li>
-            <li style="float:right" id="Signup"><a onClick="testUser()">Sign Up</a></li>
+            <li style="float:right" id="Signup"><a>Sign Up</a></li>
         </ul>
     </div>
-    <button onClick="testUser()">Test User</button>
     
     
     
@@ -195,26 +339,38 @@
     
     
     <!-- Signup Popup Box -->
-    <div class="popup" id="popup">
+    <div class="popupIn" id="popupSignout">
+        <div class="back" onClick="closeSignupBox()"></div>
         <div class="signupBox">
-            <a style="text-align: right; text-decoration: none" href="javascript:void(0);" onClick="closeSignupBox()">x</a>
+            <a style="align-self: flex-end; text-decoration: none" href="javascript:void(0);" onClick="closeSignupBox()">x</a>
             <h3>Sign Up</h3>
-            <a>First Name</a>
-            <input type="text" placeholder="John"/>
+            <input type="text" placeholder="First Name" id="firstNameInput"/>
             <br>
-            <a>Last Name</a>
-            <input type="text" placeholder="Edwards"/>
+            <input type="text" placeholder="Last Name" id="lastNameInput"/>
             <br>
-            <a>Email</a>
-            <input type="text" placeholder="john.e@gmail.com"/>
+            <input type="text" placeholder="Email" id="emailInputSignup"/>
             <br>
-            <a>Phone Number</a>
-            <input type="text" placeholder="0455493110"/>
+            <input type="text" placeholder="Phone Number" id="phoneNumberInput"/>
             <br>
-            <a>Password</a>
-            <input type="password" placeholder="Enter 6+ Characters"/>
+            <input type="password" placeholder="Password" id="passwordInputSignup"/>
             <br>
             <button onclick="signup()">Sign Up</button>
+        </div>
+    </div>
+    
+    
+    
+       <!-- Login Popup Box -->
+    <div class="popupIn" id="popupLogin">
+        <div class="back" onClick="closeLoginBox()"></div>
+        <div class="loginBox">
+            <a style="align-self: flex-end; text-decoration: none" href="javascript:void(0);" onClick="closeLoginBox()">x</a>
+            <h3>Log In</h3>
+            <input type="text" placeholder="Email" id="emailInputLogin"/>
+            <br>
+            <input type="password" placeholder="Password" id="passwordInputLogin"/>
+            <br>
+            <button onclick="loginAccount()">Login</button>
         </div>
     </div>
 </body>
