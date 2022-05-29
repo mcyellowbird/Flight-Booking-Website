@@ -1,5 +1,13 @@
 <head>
+    <title>Flight Booking</title>
+    <!-- <meta http-equiv="refresh" content="2"> -->
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
+        
+        * {
+            font-family: Oxygen;
+        }
+        
         body {
             background-color: rgb(238, 245, 255);
         }
@@ -41,22 +49,47 @@
         
         .signupBox {
             top: 50%;
-            margin: 20% auto auto auto;
+            margin: 15% auto auto auto;
             width: 10%;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            height: 30%;
-            border: 5px solid green;
+            height: 35%;
+            border-radius: 10px;
+            background-color: #4b4a6c;
+            border: 5px solid #4b4a6c;
+            color: #fafafa;
         }
         
         .signupBox input {
-            width: 120px;
+            width: 90%;
+            height: 30px;
+            margin-left: 5%;
+            font-size: 14;
+            border-radius: 5px;
+            box-shadow: 1px 1px 1px 1px black;
         }
         
         .signupBox a {
-            padding-right: 10px;
+            color: #fafafa;
+            padding-left: 6%;
+            padding-bottom: 5px;
+        }
+        
+        .signupBox h3 {
+            text-shadow: 1px 1px 1px black;
+            text-align: center;
+        }
+        
+        .signupBox button {
+            color: #fafafa;
+            width: 80%;
+            align-self: center;
+            margin-bottom: 5%;
+            height: 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #1eb561;
         }
         
     </style>
@@ -111,11 +144,19 @@
     </div>
     
     <div class="signupBox">
+        <h3>Sign Up</h3>
         <a>First Name</a>
-        <input type="text"/>
+        <input type="text" placeholder="John"/>
         <br>
         <a>Last Name</a>
-        <input type="text"/>
-        <br><br>
+        <input type="text" placeholder="Edwards"/>
+        <br>
+        <a>Email</a>
+        <input type="text" placeholder="john.e@gmail.com"/>
+        <br>
+        <a>Phone Number</a>
+        <input type="text" placeholder="0455493110"/>
+        <br>
+        <button>Sign Up</button>
     </div>
 </body>
