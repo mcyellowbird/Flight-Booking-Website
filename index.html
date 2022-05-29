@@ -1,0 +1,93 @@
+<head>
+    <style>
+        body {
+            background-color: rgb(238, 245, 255);
+        }
+        
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            border-radius: 20px;
+        }
+        
+        .navbar ul li {
+            float: left;
+        }
+        
+        .navbar ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+        
+        .navbar ul li a:hover {
+            background-color: #484848;
+        }
+        
+        .active {
+            background-color: #04AA6D;
+            border-radius: 20px;
+        }
+        
+        .active a:hover {
+            background-color: #02c17b !important;
+        }
+        
+    </style>
+    <script>
+        function signout(){
+            localStorage.clear('currentUser');
+            console.log(localStorage.currentUser);
+            setup();
+        }
+        
+        function testUser(){
+            localStorage.setItem('currentUser', 'test');
+            setup();
+        }
+        
+        function setup(){
+            if (localStorage.getItem('currentUser') != null){
+                var nList = document.getElementById("navlist");
+                
+                nList.childNodes[3].innerHTML = "<a href=\"javascript:void(0);\">Sign Out</a>";
+                nList.childNodes[3].setAttribute('id', 'Signout');
+                nList.childNodes[3].addEventListener("click", signout);
+                
+                if (nList.childNodes[5] != null){
+                    nList.removeChild(nList.childNodes[5]);
+                }
+            }
+            else {
+                var nList = document.getElementById("navlist");
+                
+                nList.childNodes[3].innerHTML = "<a href=\"SignupPage.html\">Sign Up</a>";
+                nList.childNodes[3].setAttribute('id', 'Signup');
+                nList.childNodes[3].removeEventListener("click", signout);
+                
+                var login = document.createElement("li");
+                login.setAttribute('style', 'float:right');
+                login.setAttribute('id', 'Login');
+                login.innerHTML = "<a href=\"LoginPage.html\">Log In</a>";
+                
+                nList.appendChild(login);
+            }
+        }
+    </script>
+</head>
+
+<body onload="setup()">
+    <div class="navbar">
+        <ul id="navlist">
+            <li class="active"><a href="index.html" id="Home">Home</a></li>
+            <li style="float:right" id="Signup"><a href="SignupPage.html">Sign Up</a></li>
+        </ul>
+    </div>
+    <button onClick="testUser()">Test User</button>
+</body>
