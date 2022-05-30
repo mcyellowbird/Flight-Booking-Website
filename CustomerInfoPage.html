@@ -244,7 +244,6 @@
                     accountInfoContent.children[i].setAttribute('disabled', "")
                 }
             }
-            console.log(activeUser);
             document.getElementById("firstNameInput").value = activeUser.firstName;
             document.getElementById("lastNameInput").value = activeUser.lastName;
             document.getElementById("phoneNumberInput").value = activeUser.phoneNumber;
@@ -314,6 +313,42 @@
             localStorage.userList = JSON.stringify(userList);
             setup();
         }
+        
+        function updatePassword() {
+            var oldPassword = document.getElementById("oldPasswordInput").value;
+            var newPassword = document.getElementById("newPasswordInput").value;
+            var confirmPassword = document.getElementById("confirmPasswordInput").value;
+            
+            var userList = JSON.parse(localStorage.userList);
+            
+            if (newPassword <= 6 || confirmPassword <= 6){
+                alert("Invalid Password\n\nYour new password has to have more than 6 characters");
+            }
+            else{
+                if (activeUser.password == oldPassword){
+                    if (newPassword == confirmPassword){
+                        for (var i = 0; i < userList.length; i++){
+                            if (userList[i].password == oldPassword){
+                                activeUser.password = newPassword;
+                                userList[i] = activeUser;
+
+                                localStorage.currentUser = JSON.stringify(activeUser);
+                                localStorage.userList = JSON.stringify(userList);
+                            }
+                        }
+                    }
+                    else{
+                        alert("Invalid Password\n\nYour new password does not match\nPlease try confirming again");
+                    }
+                }
+                else{
+                    alert("Invalid Password\n\nYour old password does not match our records\nPlease try again");
+                }
+            }
+            
+            setup();
+        }
+        
     </script>
 </head>
 
@@ -329,12 +364,11 @@
         <div id="sidebar">
             <a class="activeBar" href="javascript:void(0)" onClick="changeNav(id)" id="accountInfoText">Account Info</a>
             <a href="javascript:void(0)" onClick="changeNav(id)" id="bookedFlightsText">Booked Flights</a>
-            <a href="javascript:void(0)" onClick="changeNav(id)" id="changePasswordText">Change Password</a>
+            <a href="javascript:void(0)" onClick="changeNav(id)" id="changePasswordText">Update Password</a>
         </div>
         
         <div id="content">
             <div class="activeContent" id="accountInfo">
-                <h1>Edit Account Information</h1>
                 <br>
                 <h3>Account Information</h3>
                 <hr>
@@ -357,11 +391,27 @@
             </div>
 
             <div id="bookedFlights">
-                <h1>View Booked Flights</h1>
+                <br>
+                <h3>View Booked Flights</h3>
+                <hr>
+                <br>
             </div>
 
             <div id="changePassword">
-                <h1>Change Password</h1>
+                <br>
+                <h3>Update Password</h3>
+                <hr>
+                <br>
+                <a>Old Password</a>
+                <input type="password" id="oldPasswordInput"/>
+                <br>
+                <a>New Password</a>
+                <input type="password" id="newPasswordInput"/>
+                <br>
+                <a>Confirm New Password</a>
+                <input type="password" id="confirmPasswordInput"/>
+                <br>
+                <button onClick="updatePassword()" id="savePassword">Save</button>
             </div>
         </div>
     </div>
