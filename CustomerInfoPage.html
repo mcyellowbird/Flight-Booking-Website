@@ -177,10 +177,55 @@
             margin-left: 5%;
         }
         
+        button:not(:disabled) {
+            color: #fafafa;
+            width: 80px;
+            height: 30px;
+            border: 1px solid black;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #3b9cff;
+            margin-left: 5%;
+            transition: width 0.2s;
+        }
+        
+        button:hover:not(:disabled) {
+            outline: none;
+            cursor: pointer;
+            background-color: #5eaeff;
+            width: 90px;
+            
+        }
+        
+        button:active:not(:disabled) {
+            outline: none;
+            width: 85px;
+            background-color: #3198ff;
+        }
+        
+        button:disabled {
+            color: #fafafa;
+            width: 80px;
+            height: 30px;
+            border: 1px solid black;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #3b9cff;
+            margin-left: 5%;
+            cursor: not-allowed;
+        }
+        
+        button:disabled {
+            background-color: #95989b;
+        }
+        
     </style>
     <script>
         
-        var activeUser = localStorage.getItem('currentUser');
+        var activeUser = JSON.parse(localStorage.currentUser);
+        
+        var userBookedFlights = localStorage.getItem('userBookedFlights');
+        var allBookedFlights = localStorage.getItem('allBookedFlights');
         
         function signout(){
             localStorage.removeItem('currentUser');
@@ -191,6 +236,22 @@
             if (localStorage.currentUser == null){
                 window.location.replace("index.html");
             }
+            
+            var accountInfoContent = document.getElementById("accountInfo");
+            
+            for (var i = 0; i < accountInfoContent.childElementCount; i++){
+                if (accountInfoContent.children[i].tagName === "INPUT"){
+                    accountInfoContent.children[i].setAttribute('disabled', "")
+                }
+            }
+            console.log(activeUser);
+            document.getElementById("firstNameInput").value = activeUser.firstName;
+            document.getElementById("lastNameInput").value = activeUser.lastName;
+            document.getElementById("phoneNumberInput").value = activeUser.phoneNumber;
+            document.getElementById("emailInput").value = activeUser.email;
+            
+            var saveButton = document.getElementById("saveButton");
+            saveButton.setAttribute('disabled', "");
         }
         
         function changeNav(id) {
@@ -218,6 +279,41 @@
                 }
             }
         }
+        
+        function editAccountInfo() {
+            var accountInfoContent = document.getElementById("accountInfo");
+            
+            var saveButton = document.getElementById("saveButton");
+            saveButton.removeAttribute('disabled');
+            
+            for (var i = 0; i < accountInfoContent.childElementCount; i++){
+                if (accountInfoContent.children[i].tagName === "INPUT"){
+                    accountInfoContent.children[i].removeAttribute('disabled')
+                }
+            }
+        }
+        
+        function saveAccountInfo() {
+            activeUser.firstName = document.getElementById("firstNameInput").value;
+            activeUser.lastName = document.getElementById("lastNameInput").value;
+            activeUser.phoneNumber = document.getElementById("phoneNumberInput").value;
+            activeUser.email = document.getElementById("emailInput").value;
+            
+            var userList = JSON.parse(localStorage.userList);
+            var oldUserInfo = JSON.parse(localStorage.currentUser);
+            var oldEmail = oldUserInfo.email;
+            
+            for (var i = 0; i < userList.length; i++){
+                if (userList[i].email == oldEmail){
+                    userList[i] = activeUser;
+                }
+            }
+            
+            localStorage.currentUser = JSON.stringify(activeUser);
+            
+            localStorage.userList = JSON.stringify(userList);
+            setup();
+        }
     </script>
 </head>
 
@@ -244,16 +340,20 @@
                 <hr>
                 <br>
                 <a>First Name</a>
-                <input type="text"/>
+                <input type="text" disabled id="firstNameInput"/>
                 <br>
                 <a>Last Name</a>
-                <input type="text"/>
+                <input type="text" disabled id="lastNameInput"/>
                 <br>
                 <a>Phone Number</a>
-                <input type="text"/>
+                <input type="text" disabled id="phoneNumberInput"/>
                 <br>
                 <a>Email Address</a>
-                <input type="text"/>
+                <input type="text" disabled id="emailInput"/>
+                <br>
+                <button onClick="editAccountInfo()">Edit</button>
+                <br>
+                <button disabled onClick="saveAccountInfo()" id="saveButton">Save</button>
             </div>
 
             <div id="bookedFlights">
