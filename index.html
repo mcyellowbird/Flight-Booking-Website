@@ -230,6 +230,9 @@
             if (fN.value == "" || lN.value == "" || e == "" || pH == "" || p.value.length <= 6){
                 alert("Invalid input\n\nMake sure you have filled out each section and your password has more than 6 characters");
             }
+            else if (e.value.indexOf("@") === -1){
+                alert("Invalid email\n\nPlease check it and try again")
+            }
             
             else{  
                 var user = {};
