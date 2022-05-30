@@ -321,12 +321,12 @@
             
             var userList = JSON.parse(localStorage.userList);
             
-            if (newPassword <= 6 || confirmPassword <= 6){
-                alert("Invalid Password\n\nYour new password has to have more than 6 characters");
+            if (newPassword.length <= 6){
+                alert("Invalid Password\n\nYour new password has to be more than 6 characters");
             }
             else{
                 if (activeUser.password == oldPassword){
-                    if (newPassword == confirmPassword){
+                    if (newPassword === confirmPassword){
                         for (var i = 0; i < userList.length; i++){
                             if (userList[i].password == oldPassword){
                                 activeUser.password = newPassword;
@@ -334,6 +334,7 @@
 
                                 localStorage.currentUser = JSON.stringify(activeUser);
                                 localStorage.userList = JSON.stringify(userList);
+                                setup();
                             }
                         }
                     }
@@ -345,8 +346,6 @@
                     alert("Invalid Password\n\nYour old password does not match our records\nPlease try again");
                 }
             }
-            
-            setup();
         }
         
     </script>
