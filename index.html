@@ -6,6 +6,7 @@
         
         * {
             font-family: Oxygen;
+            user-select: none;
         }
         
         body {
@@ -19,6 +20,7 @@
             overflow: hidden;
             background-color: #333;
             border-radius: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
         
         .navbar ul li {
@@ -27,7 +29,7 @@
         
         .navbar ul li a {
             display: block;
-            color: white;
+            color: #fafafa;
             text-align: center;
             padding: 14px 16px;
             border-radius: 20px;
@@ -38,7 +40,7 @@
             background-color: #5eaeff;
         }
         
-        .navbar ul li a:focus {
+        .navbar ul li a:active {
             background-color: #3198ff;
         }
         
@@ -48,11 +50,12 @@
         }
         
         .active a:hover {
-            background-color: #5eaeff !important;
+            background-color: #5eaeff;
         }
         
-        .active a:focus {
-            background-color: #3198ff !important;
+        
+        .active a:active{
+            background-color: #3198ff;
         }
         
         .popupIn {
@@ -310,9 +313,9 @@
                 nList.childNodes[3].removeEventListener("click", openSignupBox);
                 nList.childNodes[3].addEventListener("click", signout);
                 
-                if (nList.childNodes[5] != null){
-                    nList.removeChild(nList.childNodes[5]);
-                }
+                nList.childNodes[5].innerHTML = "<a href=\"CustomerInfoPage.html\">Manage Account</a>";
+                nList.childNodes[5].setAttribute('id', 'signout');
+                nList.childNodes[5].removeEventListener("click", openLoginBox);
             }
             else {
                 var nList = document.getElementById("navlist");
@@ -322,13 +325,10 @@
                 nList.childNodes[3].removeEventListener("click", signout);
                 nList.childNodes[3].addEventListener("click", openSignupBox);
                 
-                var login = document.createElement("li");
-                login.setAttribute('style', 'float:right');
-                login.setAttribute('id', 'Login');
-                login.innerHTML = "<a href=\"javascript:void(0)\">Log In</a>";
-                login.addEventListener("click", openLoginBox);
-                
-                nList.appendChild(login);
+                nList.childNodes[5].setAttribute('style', 'float:right');
+                nList.childNodes[5].setAttribute('id', 'Login');
+                nList.childNodes[5].innerHTML = "<a href=\"javascript:void(0)\">Log In</a>";
+                nList.childNodes[5].addEventListener("click", openLoginBox);
             }
         }
     </script>
@@ -339,9 +339,9 @@
         <ul id="navlist">
             <li class="active"><a href="index.html" id="Home">Home</a></li>
             <li style="float:right" id="Signup"><a>Sign Up</a></li>
+            <li style="float:right" id="Login"><a>Log In</a></li>
         </ul>
     </div>
-    
     
     
     

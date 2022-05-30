@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<head>
+    <title>Flight Booking Website</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;700&display=swap');
+        
+        * {
+            font-family: Oxygen;
+            user-select: none;
+        }
+        
+        body {
+            background-color: rgb(238, 245, 255);
+        }
+        
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            border-radius: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .navbar ul li {
+            float: left;
+        }
+        
+        .navbar ul li a {
+            display: block;
+            color: #fafafa;
+            text-align: center;
+            padding: 14px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+        
+        .navbar ul li a:hover {
+            background-color: #5eaeff;
+        }
+        
+        .navbar ul li a:active {
+            background-color: #3198ff;
+        }
+        
+        .active {
+            background-color: #3b9cff;
+            border-radius: 20px;
+        }
+        
+        .active a:hover {
+            background-color: #5eaeff;
+        }
+        
+        .active a:active{
+            background-color: #3198ff;
+        }
+        
+        .container {
+            position: fixed;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            
+            width: 98%;
+            height: 85%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        #sidebar {
+            
+            width: 250px;
+            height: 400px;
+            
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            margin-right: 80%;
+            
+            border-radius: 5px;
+            background-color: #333;
+            box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+        }
+        
+        #sidebar a {
+            align-self: flex-start;
+            margin-left: 10%; 
+            color: #fafafa;
+            position: sticky;
+            margin-top: 20px;
+            text-decoration: none;
+            transition: transform .2s;
+        }
+        
+        #sidebar a:hover {
+            transform: scale(1.1);
+        }
+        
+        #sidebar a:active {
+            transform: scale(1);
+        }
+        
+        .activeBar {
+            padding-left: 5%;
+            border-left: 5px solid #3b9cff;
+            font-weight: bold;
+        }
+        
+        #content {
+            position: absolute;
+            display: flex;
+            flex-flow: column;
+            width: 1000px;
+            height: 800px;
+            margin-left: 300px;
+            margin-right: 400px;
+            background-color: #fafafa;
+            box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+        }
+        
+        #content div {
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            
+            align-self: center;
+            position: absolute;
+            visibility: hidden;
+        }
+        
+        #content h1 {
+            align-self: center;
+            font-weight: 300;
+        }
+        
+        #content h3 {
+            margin-left: 5%;
+            font-weight: 300;
+            align-self: flex-start;
+        }
+        
+        #content hr {
+            width: 50%;
+            border-width: 0;
+            height: 2px;
+            
+            color: lightgrey;
+            background-color: lightgrey;
+            
+            margin-left: 5%;
+            align-self: flex-start;
+        }
+        
+        #content a {
+            margin-left: 5%;
+            align-self: flex-start;
+        }
+        
+        #content .activeContent {
+            visibility: visible;
+        }
+        
+        #content input {
+            width: 250px;
+            height: 25px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            border: 1px solid lightgrey;
+            box-shadow: 1px 1px 1px 1px black;
+            margin-left: 5%;
+        }
+        
+    </style>
+    <script>
+        
+        var activeUser = localStorage.getItem('currentUser');
+        
+        function signout(){
+            localStorage.removeItem('currentUser');
+            setup();
+        }
+        
+        function setup(){
+            if (localStorage.currentUser == null){
+                window.location.replace("index.html");
+            }
+        }
+        
+        function changeNav(id) {
+            var sidebar = document.getElementById("sidebar");
+            for (var i = 0; i < sidebar.childElementCount; i++){
+                if (id == sidebar.children[i].id){
+                    sidebar.children[i].classList.add("activeBar");
+                    showContent(id);
+                }
+                else{
+                    sidebar.children[i].classList.remove("activeBar");
+                }
+            }
+        }
+        
+        function showContent(id) {
+            var contentList = document.getElementById("content");
+            
+            for (var i = 0; i < content.childElementCount; i++){
+                if (id == content.children[i].id + "Text"){
+                    content.children[i].classList.add("activeContent");
+                }
+                else{
+                    content.children[i].classList.remove("activeContent");
+                }
+            }
+        }
+    </script>
+</head>
+
+<body onload="setup()">
+    <div class="navbar">
+        <ul id="navlist">
+            <li><a href="index.html" id="Home">Home</a></li>
+            <li style="float:right" id="Signout"><a href="javascript:void(0)" onClick="signout()">Sign Out</a></li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <div id="sidebar">
+            <a class="activeBar" href="javascript:void(0)" onClick="changeNav(id)" id="accountInfoText">Account Info</a>
+            <a href="javascript:void(0)" onClick="changeNav(id)" id="bookedFlightsText">Booked Flights</a>
+            <a href="javascript:void(0)" onClick="changeNav(id)" id="changePasswordText">Change Password</a>
+        </div>
+        
+        <div id="content">
+            <div class="activeContent" id="accountInfo">
+                <h1>Edit Account Information</h1>
+                <br>
+                <h3>Account Information</h3>
+                <hr>
+                <br>
+                <a>First Name</a>
+                <input type="text"/>
+                <br>
+                <a>Last Name</a>
+                <input type="text"/>
+                <br>
+                <a>Phone Number</a>
+                <input type="text"/>
+                <br>
+                <a>Email Address</a>
+                <input type="text"/>
+            </div>
+
+            <div id="bookedFlights">
+                <h1>View Booked Flights</h1>
+            </div>
+
+            <div id="changePassword">
+                <h1>Change Password</h1>
+            </div>
+        </div>
+    </div>
+</body>
