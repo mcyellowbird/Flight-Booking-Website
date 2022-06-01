@@ -195,6 +195,154 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
         
+        .pageBreak{
+            width: 100%;
+            height: 200px;
+        }
+        
+        .fSContainerTop{
+            width: 1400px;
+            height: 80px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            
+            display: flex;
+            justify-content: flex-end;
+            flex-flow: column;
+            flex-wrap: wrap;
+        }
+        
+        .flightTab {
+            display: flex;
+            justify-content: flex-start;
+        }
+        
+        .flightTab a {
+            font-size: 20px;
+            padding-left: 10px;
+            padding-right: 15px;
+            padding-top: 6px;
+            margin-bottom: -3px;
+            text-decoration: none;
+            border-bottom: 3px solid #3198ff;
+            color: #3198ff;
+            font-weight: bold;
+        }
+        .flightTab img {
+            text-decoration: none;
+            padding-left: 15px;
+            padding-bottom: 8px;
+            margin-left: 25px;
+            margin-bottom: -3px;
+            border-bottom: 3px solid #3198ff;
+            width: 40px;
+            cursor: pointer;
+        }
+        
+        .fSContainerBottom{
+            width: 1400px;
+            height: 250px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            background-color: white;
+            box-shadow: 0px -15px 0 #fff, 0 1px 15px rgba(0, 0, 0, 0.2);
+            display:flex;
+            flex-flow: row;
+            align-items: flex-start;
+            /*box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);*/
+        }
+        
+        .flightSelector {
+            display:flex;
+            justify-content: center;
+            flex-flow: column;
+            align-items: center;
+        }
+        
+        .flightSelector #tripType {
+            width: 120px;
+            height: 40px;
+            font-size: 15px;
+            margin-left: 50px;
+            margin-top: 50px;
+            padding-left: 10px;
+            border-radius: 5px;
+        }
+        
+        .flightSelector select:active, select:hover{
+            outline: 2px solid #3198ff;
+        }
+        
+        .passengerAmount {
+            display:flex;
+            justify-content: center;
+            flex-flow: row;
+            align-items: flex-end;
+        }
+        
+        .flightSelector #passengerCount {
+            appearance: none;
+            width: 100px;
+            height: 40px;
+            border-radius: 0px;
+            font-size: 15px;
+            margin-top: 50px;
+            text-align: center;
+            outline: 0px solid #3198ff;
+            border-left: 0px;
+            border-right: 0px;
+            pointer-events: none;
+        }
+        
+        .passengerCountChange {
+            width: 40px;
+            height: 38px;
+            border: 1px solid #747474;
+            display:flex;
+            justify-content: center;
+            flex-flow: column;
+            align-items: center;
+        }
+        
+        .passengerCountChange:first-of-type {
+            margin-left: 100px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .passengerCountChange:last-of-type {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .passengerCountChange a {
+            padding-left: 0px;
+            padding-bottom: 5px;
+            color: black;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        
+        .passengerCountChange:active {
+            z-index: 1;
+            outline: 1px solid #3198ff;
+        }
+        
+        hr {
+            width: 100%;
+            border-width: 0;
+            height: 2px;
+            
+            z-index: 1;
+            
+            color: #ebebeb;
+            background-color: #ebebeb;
+            
+            align-self: flex-start;
+        }
+        
     </style>
     <script>
         
@@ -335,6 +483,18 @@
                 nList.childNodes[5].addEventListener("click", openLoginBox);
             }
         }
+        
+        function changePassengerCount(number) {
+            var curCount = parseInt(document.getElementById("passengerCount").value);
+            
+            if ((curCount + number) >= 1 && (curCount + number) <= 9){
+                var newCount = curCount + number;
+                document.getElementById("passengerCount").value = newCount;
+            }
+            else if (curCount + number > 9){
+                alert("Please call customer service if you wish to book for more than 9 passengers")
+            }
+        }
     </script>
 </head>
 
@@ -347,8 +507,38 @@
         </ul>
     </div>
     
+    <div class="pageBreak"></div>
     
-    
+    <div class="flightSelector">
+        <div class="fSContainerTop">
+            <div class="flightTab">
+                <img src="images/planeside.png" href="javascript:void(0);"/>
+                <a href="javascript:void(0)">Flights</a>
+            </div>
+            <hr>
+        </div>
+        <div class="fSContainerBottom">
+            <select name="tripType" id="tripType">
+                <option value="oneway">One Way</option>
+                <option value="return">Return Trip</option>
+            </select>
+            <div class="passengerAmount">
+                <div class="passengerCountChange" onClick="changePassengerCount(1)"><a>+</a></div>
+                <select name="passengerCount" id="passengerCount">
+                    <option value="1">1 Passenger</option>
+                    <option value="2">2 Passenger</option>
+                    <option value="3">3 Passenger</option>
+                    <option value="4">4 Passenger</option>
+                    <option value="5">5 Passenger</option>
+                    <option value="6">6 Passenger</option>
+                    <option value="7">7 Passenger</option>
+                    <option value="8">8 Passenger</option>
+                    <option value="9">9 Passenger</option>
+                </select>
+                <div class="passengerCountChange" onClick="changePassengerCount(-1)"><a>–</a></div>
+            </div>
+        </div>
+    </div>
     
     
     <!-- Signup Popup Box -->
