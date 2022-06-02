@@ -342,10 +342,6 @@
             margin-left: 40px;
         }
         
-        #flightFrom {
-            font-size: 5px;
-        }
-        
         .flightSelector {
         	display: flex;
         	justify-content: center;
@@ -433,7 +429,45 @@
         	background-color: #ebebeb;
 
         	align-self: flex-start;
-        }        
+        }
+        
+        .flightToFrom {
+            width: 300px;
+            height: 40px;
+            font-size: 15px;
+            
+            padding-left: 10px;
+            
+            border-top: none;
+            border-color: #747474;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .dropdown {
+        }
+        
+        .dropdown span {
+            position: absolute;
+            padding-left: 15px;
+            padding-top: 5px;
+            width: 283px;
+            
+            border: 1px solid #747474;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            
+            font-weight: bold;
+        }
+        
+        .dropdown select:hover, .dropdown select:focus {
+            outline: none;
+        }
+        
+        .dropdown:hover{
+            outline: 2px solid #747474;
+            border-radius: 5px;
+        }
+        
     </style>
     <script>
         
@@ -632,19 +666,45 @@
             </div>
             
             <div class="bottomHalf">
-                <div>
-                    <input autocomplete="on" list="flightFrom"/>
-                    <datalist id="flightFrom">
-                        <option>First</option>
-                        <option>Second</option>
-                    </datalist>
+                <div class="dropdown">
+                    <span>Flight From</span>
+                    <br>
+                    <select class="flightToFrom" id="flightFrom">
+                        <optgroup label="Australia">
+                            <option value="Sydney Airport - SYD" selected>Sydney, Australia</option>
+                            <option value="Melbourne Airport - MEL">Melbourne, Australia</option>
+                            <option value="Brisbane Airport - BNE">Brisbane, Australia</option>
+                            <option value="Perth Airport - PER">Perth, Australia</option>
+                            <option value="Adelaide Airport - ADL">Adelaide, Australia</option>
+                            <option value="Gold Coast Airport - OOL">Coolangatta, Australia</option>
+                            <option value="Cairns Airport - CNS">Cairns, Australia</option>
+                            <option value="Hobart Airport - HBA">Hobart, Australia</option>
+                            <option value="Canberra Airport - CBR">Canberra, Australia</option>
+                        </optgroup>
+                        <optgroup label="New Zealand">
+                            <option value="Auckland Airport - AKL">Auckland, New Zealand</option>
+                        </optgroup>
+                    </select>
                 </div>
-                <div>
-                    <input autocomplete="on" list="flightTo"/>
-                    <datalist id="flightTo">
-                        <option>First</option>
-                        <option>Second</option>
-                    </datalist>
+                <div class="dropdown">
+                    <span>Flight To</span>
+                    <br>
+                    <select class="flightToFrom" id="flightTo">
+                        <optgroup label="Australia">
+                            <option value="Sydney Airport - SYD" selected>Sydney, Australia</option>
+                            <option value="Melbourne Airport - MEL">Melbourne, Australia</option>
+                            <option value="Brisbane Airport - BNE">Brisbane, Australia</option>
+                            <option value="Perth Airport - PER">Perth, Australia</option>
+                            <option value="Adelaide Airport - ADL">Adelaide, Australia</option>
+                            <option value="Gold Coast Airport - OOL">Coolangatta, Australia</option>
+                            <option value="Cairns Airport - CNS">Cairns, Australia</option>
+                            <option value="Hobart Airport - HBA">Hobart, Australia</option>
+                            <option value="Canberra Airport - CBR">Canberra, Australia</option>
+                        </optgroup>
+                        <optgroup label="New Zealand">
+                            <option value="Auckland Airport - AKL">Auckland, New Zealand</option>
+                        </optgroup>
+                    </select>
                 </div>
             </div>
         </div>
