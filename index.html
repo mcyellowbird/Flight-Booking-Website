@@ -317,11 +317,35 @@
         	background-color: white;
         	box-shadow: 0px -15px 0 #fff, 0 1px 15px rgba(0, 0, 0, 0.2);
         	display: flex;
-        	flex-flow: row;
+        	flex-flow: column;
         	align-items: flex-start;
         	/*box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);*/
         }
+        
+        
+        .fSContainerBottom .topHalf {
+        	display: flex;
+        	flex-flow: row;
+        	align-items: flex-start;
+            width: 100%;
+        }
 
+        .fSContainerBottom .bottomHalf {
+        	display: flex;
+        	flex-flow: row;
+        	align-items: flex-start;
+            width: 100%;
+        }
+        
+        .fSContainerBottom .bottomHalf div {
+            margin-top: 60px;
+            margin-left: 40px;
+        }
+        
+        #flightFrom {
+            font-size: 5px;
+        }
+        
         .flightSelector {
         	display: flex;
         	justify-content: center;
@@ -333,8 +357,8 @@
         	width: 120px;
         	height: 40px;
         	font-size: 15px;
-        	margin-left: 50px;
-        	margin-top: 50px;
+        	margin-left: 40px;
+        	margin-top: 30px;
         	padding-left: 10px;
         	border-radius: 5px;
         }
@@ -356,7 +380,7 @@
         	height: 40px;
         	border-radius: 0px;
         	font-size: 15px;
-        	margin-top: 50px;
+        	margin-top: 30px;
         	text-align: center;
         	outline: 0px solid #3198ff;
         	border-left: 0px;
@@ -375,7 +399,7 @@
         }
 
         .passengerCountChange:first-of-type {
-        	margin-left: 100px;
+        	margin-left: 50px;
         	border-top-left-radius: 5px;
         	border-bottom-left-radius: 5px;
         }
@@ -585,24 +609,43 @@
             <hr>
         </div>
         <div class="fSContainerBottom">
-            <select name="tripType" id="tripType">
-                <option value="oneway">One Way</option>
-                <option value="return">Return Trip</option>
-            </select>
-            <div class="passengerAmount">
-                <div class="passengerCountChange" onClick="changePassengerCount(1)"><a>+</a></div>
-                <select name="passengerCount" id="passengerCount">
-                    <option value="1">1 Passenger</option>
-                    <option value="2">2 Passenger</option>
-                    <option value="3">3 Passenger</option>
-                    <option value="4">4 Passenger</option>
-                    <option value="5">5 Passenger</option>
-                    <option value="6">6 Passenger</option>
-                    <option value="7">7 Passenger</option>
-                    <option value="8">8 Passenger</option>
-                    <option value="9">9 Passenger</option>
+            <div class="topHalf">
+                <select name="tripType" id="tripType">
+                    <option value="oneway">One Way</option>
+                    <option value="return">Return Trip</option>
                 </select>
-                <div class="passengerCountChange" onClick="changePassengerCount(-1)"><a>–</a></div>
+                <div class="passengerAmount">
+                    <div class="passengerCountChange" onClick="changePassengerCount(1)"><a>+</a></div>
+                    <select name="passengerCount" id="passengerCount">
+                        <option value="1">1 Passenger</option>
+                        <option value="2">2 Passenger</option>
+                        <option value="3">3 Passenger</option>
+                        <option value="4">4 Passenger</option>
+                        <option value="5">5 Passenger</option>
+                        <option value="6">6 Passenger</option>
+                        <option value="7">7 Passenger</option>
+                        <option value="8">8 Passenger</option>
+                        <option value="9">9 Passenger</option>
+                    </select>
+                    <div class="passengerCountChange" onClick="changePassengerCount(-1)"><a>–</a></div>
+                </div>
+            </div>
+            
+            <div class="bottomHalf">
+                <div>
+                    <input autocomplete="on" list="flightFrom"/>
+                    <datalist id="flightFrom">
+                        <option>First</option>
+                        <option>Second</option>
+                    </datalist>
+                </div>
+                <div>
+                    <input autocomplete="on" list="flightTo"/>
+                    <datalist id="flightTo">
+                        <option>First</option>
+                        <option>Second</option>
+                    </datalist>
+                </div>
             </div>
         </div>
     </div>
