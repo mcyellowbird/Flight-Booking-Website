@@ -4,345 +4,412 @@
     <title>Flight Booking Website</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
-        
+
         * {
-            font-family: Oxygen;
-            user-select: none;
+        	font-family: Oxygen;
+        	user-select: none;
         }
-        
+
         body {
-            background-color: rgb(238, 245, 255);
+        	background-color: rgb(238, 245, 255);
         }
-        
+
         .navbar ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
-            border-radius: 20px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        	list-style-type: none;
+        	margin: 0;
+        	padding: 0;
+        	overflow: hidden;
+        	background-color: #333;
+        	border-radius: 20px;
+        	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
-        
+
         .navbar ul li {
-            float: left;
+        	float: left;
         }
-        
+
         .navbar ul li a {
-            display: block;
-            color: #fafafa;
-            text-align: center;
-            padding: 14px 16px;
-            border-radius: 20px;
-            text-decoration: none;
+        	display: block;
+        	color: #fafafa;
+        	text-align: center;
+        	padding: 14px 16px;
+        	border-radius: 20px;
+        	text-decoration: none;
         }
-        
+
         .navbar ul li a:hover {
-            background-color: #5eaeff;
+        	background-color: #5eaeff;
         }
-        
+
         .navbar ul li a:active {
-            background-color: #3198ff;
+        	background-color: #3198ff;
         }
-        
+
         .active {
-            background-color: #3b9cff;
-            border-radius: 20px;
+        	background-color: #3b9cff;
+        	border-radius: 20px;
         }
-        
+
         .active a:hover {
-            background-color: #5eaeff;
+        	background-color: #5eaeff;
         }
-        
-        
-        .active a:active{
-            background-color: #3198ff;
+
+
+        .active a:active {
+        	background-color: #3198ff;
         }
-        
+
         .popupIn {
-            z-index: 998;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 50%;
-            left: 50%;
-            display: none;
-            visibility: visible;
-            transform: translate(-50%, -50%);
-            animation: fadeIn .5s;
+        	z-index: 998;
+        	position: fixed;
+        	width: 100%;
+        	height: 100%;
+        	top: 50%;
+        	left: 50%;
+        	display: none;
+        	visibility: visible;
+        	transform: translate(-50%, -50%);
+        	animation: fadeIn .5s;
         }
-        
-        .popupOut {z-index: -5;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 50%;
-            left: 50%;
-            opacity: 0;
-            visibility: hidden;
-            transform: translate(-50%, -50%);
-            animation: fadeOut .5s;
+
+        .popupOut {
+        	z-index: -5;
+        	position: fixed;
+        	width: 100%;
+        	height: 100%;
+        	top: 50%;
+        	left: 50%;
+        	opacity: 0;
+        	visibility: hidden;
+        	transform: translate(-50%, -50%);
+        	animation: fadeOut .5s;
         }
-        
+
         .back {
-            z-index: -4;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
+        	z-index: -4;
+        	position: fixed;
+        	width: 100%;
+        	height: 100%;
+        	background: rgba(0, 0, 0, 0.2);
         }
-        
-        @keyframes fadeIn{
-            0% {opacity: 0;}
-            100% {opacity: 1; visibility: visible; z-index: 998;}
+
+        @keyframes fadeIn {
+        	0% {
+        		opacity: 0;
+        	}
+
+        	100% {
+        		opacity: 1;
+        		visibility: visible;
+        		z-index: 998;
+        	}
         }
-        @keyframes fadeOut{
-            0% {opacity: 1; visibility: visible; z-index: 998;}
-            100% {opacity: 0; visibility: hidden; z-index: -5;}
+
+        @keyframes fadeOut {
+        	0% {
+        		opacity: 1;
+        		visibility: visible;
+        		z-index: 998;
+        	}
+
+        	100% {
+        		opacity: 0;
+        		visibility: hidden;
+        		z-index: -5;
+        	}
         }
-        
+
         .signupBox {
-            z-index: 2;
-            
-            width: 350px;
-            height: 430px;
-            
-            margin: auto;
-            margin-top: 15%;
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            
-            border-radius: 5px;
-            background-color: #4b4a6c;
-            border: 5px solid #4b4a6c;
-            color: #fafafa;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        	z-index: 2;
+
+        	width: 350px;
+        	height: 430px;
+
+        	margin: auto;
+        	margin-top: 15%;
+
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+        	flex-direction: column;
+
+        	border-radius: 30px;
+        	background-color: white;
+        	border: 5px solid white;
+        	color: #fafafa;
+        	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
-        
+
+        .signupBox a, .loginBox a {
+        	font-size: 25px;
+        	color: #3b9cff;
+        	margin-right: 10px;
+        	text-decoration: none;
+        	align-self: flex-end;
+        }
+
+        .signupBox a:hover, .loginBox a:hover {
+        	text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        #firstNameInput, #lastNameInput {
+        	padding-left: 30px;
+        	background: url(images/user.png) no-repeat left;
+        	background-size: 20px;
+        }
+
+        #emailInputSignup {
+        	padding-left: 30px;
+        	background: url(images/envelope.png) no-repeat left;
+        	background-size: 20px;
+        }
+
+        #phoneNumberInput {
+        	padding-left: 30px;
+        	background: url(images/smartphone.png) no-repeat left;
+        	background-size: 20px;
+        }
+
+        #passwordInputSignup {
+        	padding-left: 30px;
+        	background: url(images/lock.png) no-repeat left;
+        	background-size: 20px;
+        }
+
+
+        #emailInputLogin {
+        	padding-left: 30px;
+        	background: url(images/envelope.png) no-repeat left;
+        	background-size: 20px;
+        }
+
+
+        #passwordInputLogin {
+        	padding-left: 30px;
+        	background: url(images/lock.png) no-repeat left;
+        	background-size: 20px;
+        }
+
         input {
-            width: 300px;
-            height: 40px;
-            font-size: 14px;
-            border-radius: 5px;
-            border: none;
-            outline: none;
-            border: 1px solid lightgrey;
-            box-shadow: 1px 1px 1px 1px black;
+        	width: 300px;
+        	height: 40px;
+        	font-size: 14px;
+        	border: none;
+        	border-bottom: 1px solid lightgrey;
+        	outline: none;
         }
-        
+
         input:focus {
-            border: 1px solid black;
+        	border-bottom: 1px solid #3b9cff;
         }
-        
+
         a {
-            color: #fafafa;
-            padding-left: 6%;
-            padding-bottom: 5px;
+        	color: #fafafa;
+        	padding-left: 6%;
+        	padding-bottom: 5px;
         }
-        
-        h3 {
-            text-shadow: 1px 1px 1px black;
-            text-align: center;
+
+        h2 {
+        	color: #3b9cff;
+        	font-weight: bold;
+        	text-align: center;
         }
-        
+
         button {
-            color: #fafafa;
-            width: 250px;
-            height: 40px;
-            border: 1px solid black;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            font-size: 16px;
-            background-color: #3b9cff;
-            transition: width 0.2s;
+        	color: #fafafa;
+        	width: 250px;
+        	height: 40px;
+        	border: 1px solid black;
+        	margin-bottom: 10px;
+        	border-radius: 10px;
+        	font-size: 16px;
+        	background-color: #3b9cff;
+        	transition: width 0.2s;
         }
-        
+
         button:hover {
-            outline: none;
-            cursor: pointer;
-            background-color: #5eaeff;
-            width: 280px;
-            
+        	outline: none;
+        	cursor: pointer;
+        	background-color: #5eaeff;
+        	width: 280px;
+
         }
-        
+
         button:focus {
-            outline: none;
-            background-color: #3198ff;
+        	outline: none;
+        	background-color: #3198ff;
         }
-        
-        
+
+
         .loginBox {
-            z-index: 2;
-            
-            width: 350px;
-            height: 250px;
-            
-            margin: auto;
-            margin-top: 15%;
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            
-            border-radius: 5px;
-            background-color: #4b4a6c;
-            border: 5px solid #4b4a6c;
-            color: #fafafa;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        	z-index: 2;
+
+        	width: 350px;
+        	height: 250px;
+
+        	margin: auto;
+        	margin-top: 15%;
+
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+        	flex-direction: column;
+
+        	border-radius: 30px;
+        	background-color: white;
+        	border: 5px solid white;
+        	color: #fafafa;
+        	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
-        
-        .pageBreak{
-            width: 100%;
-            height: 200px;
+
+        .pageBreak {
+        	width: 100%;
+        	height: 200px;
         }
-        
-        .fSContainerTop{
-            width: 1400px;
-            height: 80px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            background-color: white;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            
-            display: flex;
-            justify-content: flex-end;
-            flex-flow: column;
-            flex-wrap: wrap;
+
+        .fSContainerTop {
+        	width: 1400px;
+        	height: 80px;
+        	border-top-left-radius: 10px;
+        	border-top-right-radius: 10px;
+        	background-color: white;
+        	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+        	display: flex;
+        	justify-content: flex-end;
+        	flex-flow: column;
+        	flex-wrap: wrap;
         }
-        
+
         .flightTab {
-            display: flex;
-            justify-content: flex-start;
+        	display: flex;
+        	justify-content: flex-start;
         }
-        
+
         .flightTab a {
-            font-size: 20px;
-            padding-left: 10px;
-            padding-right: 15px;
-            padding-top: 6px;
-            margin-bottom: -3px;
-            text-decoration: none;
-            border-bottom: 3px solid #3198ff;
-            color: #3198ff;
-            font-weight: bold;
+        	font-size: 20px;
+        	padding-left: 10px;
+        	padding-right: 15px;
+        	padding-top: 6px;
+        	margin-bottom: -3px;
+        	text-decoration: none;
+        	border-bottom: 3px solid #3198ff;
+        	color: #3198ff;
+        	font-weight: bold;
         }
+
         .flightTab img {
-            text-decoration: none;
-            padding-left: 15px;
-            padding-bottom: 8px;
-            margin-left: 25px;
-            margin-bottom: -3px;
-            border-bottom: 3px solid #3198ff;
-            width: 40px;
-            cursor: pointer;
+        	text-decoration: none;
+        	padding-left: 15px;
+        	padding-bottom: 8px;
+        	margin-left: 25px;
+        	margin-bottom: -3px;
+        	border-bottom: 3px solid #3198ff;
+        	width: 40px;
+        	cursor: pointer;
         }
-        
-        .fSContainerBottom{
-            width: 1400px;
-            height: 250px;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            background-color: white;
-            box-shadow: 0px -15px 0 #fff, 0 1px 15px rgba(0, 0, 0, 0.2);
-            display:flex;
-            flex-flow: row;
-            align-items: flex-start;
-            /*box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);*/
+
+        .fSContainerBottom {
+        	width: 1400px;
+        	height: 250px;
+        	border-bottom-left-radius: 10px;
+        	border-bottom-right-radius: 10px;
+        	background-color: white;
+        	box-shadow: 0px -15px 0 #fff, 0 1px 15px rgba(0, 0, 0, 0.2);
+        	display: flex;
+        	flex-flow: row;
+        	align-items: flex-start;
+        	/*box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);*/
         }
-        
+
         .flightSelector {
-            display:flex;
-            justify-content: center;
-            flex-flow: column;
-            align-items: center;
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: column;
+        	align-items: center;
         }
-        
+
         .flightSelector #tripType {
-            width: 120px;
-            height: 40px;
-            font-size: 15px;
-            margin-left: 50px;
-            margin-top: 50px;
-            padding-left: 10px;
-            border-radius: 5px;
+        	width: 120px;
+        	height: 40px;
+        	font-size: 15px;
+        	margin-left: 50px;
+        	margin-top: 50px;
+        	padding-left: 10px;
+        	border-radius: 5px;
         }
-        
-        .flightSelector select:active, select:hover{
-            outline: 2px solid #3198ff;
+
+        .flightSelector select:active, select:hover {
+        	outline: 2px solid #3198ff;
         }
-        
+
         .passengerAmount {
-            display:flex;
-            justify-content: center;
-            flex-flow: row;
-            align-items: flex-end;
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: row;
+        	align-items: flex-end;
         }
-        
+
         .flightSelector #passengerCount {
-            appearance: none;
-            width: 100px;
-            height: 40px;
-            border-radius: 0px;
-            font-size: 15px;
-            margin-top: 50px;
-            text-align: center;
-            outline: 0px solid #3198ff;
-            border-left: 0px;
-            border-right: 0px;
-            pointer-events: none;
+        	appearance: none;
+        	width: 100px;
+        	height: 40px;
+        	border-radius: 0px;
+        	font-size: 15px;
+        	margin-top: 50px;
+        	text-align: center;
+        	outline: 0px solid #3198ff;
+        	border-left: 0px;
+        	border-right: 0px;
+        	pointer-events: none;
         }
-        
+
         .passengerCountChange {
-            width: 40px;
-            height: 38px;
-            border: 1px solid #747474;
-            display:flex;
-            justify-content: center;
-            flex-flow: column;
-            align-items: center;
+        	width: 40px;
+        	height: 38px;
+        	border: 1px solid #747474;
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: column;
+        	align-items: center;
         }
-        
+
         .passengerCountChange:first-of-type {
-            margin-left: 100px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
+        	margin-left: 100px;
+        	border-top-left-radius: 5px;
+        	border-bottom-left-radius: 5px;
         }
-        
+
         .passengerCountChange:last-of-type {
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
+        	border-top-right-radius: 5px;
+        	border-bottom-right-radius: 5px;
         }
-        
+
         .passengerCountChange a {
-            padding-left: 0px;
-            padding-bottom: 5px;
-            color: black;
-            font-size: 25px;
-            font-weight: bold;
+        	padding-left: 0px;
+        	padding-bottom: 5px;
+        	color: black;
+        	font-size: 25px;
+        	font-weight: bold;
         }
-        
+
         .passengerCountChange:active {
-            z-index: 1;
-            outline: 1px solid #3198ff;
+        	z-index: 1;
+        	outline: 1px solid #3198ff;
         }
-        
+
         hr {
-            width: 100%;
-            border-width: 0;
-            height: 2px;
-            
-            z-index: 1;
-            
-            color: #ebebeb;
-            background-color: #ebebeb;
-            
-            align-self: flex-start;
-        }
-        
+        	width: 100%;
+        	border-width: 0;
+        	height: 2px;
+
+        	z-index: 1;
+
+        	color: #ebebeb;
+        	background-color: #ebebeb;
+
+        	align-self: flex-start;
+        }        
     </style>
     <script>
         
@@ -545,8 +612,8 @@
     <div class="popupIn" id="popupSignout">
         <div class="back" onClick="closeSignupBox()"></div>
         <div class="signupBox">
-            <a style="align-self: flex-end; text-decoration: none" href="javascript:void(0);" onClick="closeSignupBox()">x</a>
-            <h3>Sign Up</h3>
+            <a href="javascript:void(0);" onClick="closeSignupBox()">x</a>
+            <h2>Sign Up</h2>
             <input type="text" placeholder="First Name" id="firstNameInput"/>
             <br>
             <input type="text" placeholder="Last Name" id="lastNameInput"/>
@@ -567,8 +634,8 @@
     <div class="popupIn" id="popupLogin">
         <div class="back" onClick="closeLoginBox()"></div>
         <div class="loginBox">
-            <a style="align-self: flex-end; text-decoration: none" href="javascript:void(0);" onClick="closeLoginBox()">x</a>
-            <h3>Log In</h3>
+            <a href="javascript:void(0);" onClick="closeLoginBox()">x</a>
+            <h2>Log In</h2>
             <input type="text" placeholder="Email" id="emailInputLogin"/>
             <br>
             <input type="password" placeholder="Password" id="passwordInputLogin"/>
