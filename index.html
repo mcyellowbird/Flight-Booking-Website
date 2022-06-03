@@ -436,36 +436,57 @@
             height: 40px;
             font-size: 15px;
             
-            padding-left: 10px;
-            
-            border-top: none;
-            border-color: #747474;
-            border-radius: 0 0 5px 5px;
+            padding-left: 5px;
         }
         
         .dropdown {
-        }
-        
-        .dropdown span {
-            position: absolute;
-            padding-left: 15px;
-            padding-top: 5px;
-            width: 283px;
-            
             border: 1px solid #747474;
-            border-bottom: none;
-            border-radius: 5px 5px 0 0;
-            
-            font-weight: bold;
-        }
-        
-        .dropdown select:hover, .dropdown select:focus {
-            outline: none;
+            border-radius: 5px;
+            overflow: hidden;
         }
         
         .dropdown:hover{
-            outline: 2px solid #747474;
+            outline: 2px solid #3198ff;
+        }
+        
+        .dropdown select {
+            border: none;
+        }
+        
+        .dropdown label {
+            padding-left: 15px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        
+        .dropdown select:hover, .dropdown select:focus {
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .dateSelect {
+            border: 1px solid #747474;
             border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .dateSelect:hover{
+            outline: 2px solid #3198ff;
+        }
+        
+        .dateSelect label {
+            padding-left: 15px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        
+        .dateSelect input {
+            width: 259.5px;
+            border-bottom: none;
+        }
+        
+        .dateSelect input:hover, .dateSelect input:focus {
+            cursor: pointer;
         }
         
     </style>
@@ -607,6 +628,16 @@
                 nList.childNodes[5].innerHTML = "<a href=\"javascript:void(0)\">Log In</a>";
                 nList.childNodes[5].addEventListener("click", openLoginBox);
             }
+            
+            // Setting flight selector date defaults
+            var date = document.getElementById("departureDate");
+            var today = new Date().toISOString().slice(0, 10);
+            //var todayString = today.getFullYear() + "-" + parseInt(today.getMonth()+1) + "-" + today.getDate();
+            
+            date.defaultValue = today;
+            date.min = today;
+            date.max = "2030-12-31";
+            date.value = today;
         }
         
         function changePassengerCount(number) {
@@ -667,8 +698,7 @@
             
             <div class="bottomHalf">
                 <div class="dropdown">
-                    <span>Flight From</span>
-                    <br>
+                    <label>From</label>
                     <select class="flightToFrom" id="flightFrom">
                         <optgroup label="Australia">
                             <option value="Sydney Airport - SYD" selected>Sydney, Australia</option>
@@ -687,8 +717,7 @@
                     </select>
                 </div>
                 <div class="dropdown">
-                    <span>Flight To</span>
-                    <br>
+                    <label>To</label>
                     <select class="flightToFrom" id="flightTo">
                         <optgroup label="Australia">
                             <option value="Sydney Airport - SYD" selected>Sydney, Australia</option>
@@ -705,6 +734,10 @@
                             <option value="Auckland Airport - AKL">Auckland, New Zealand</option>
                         </optgroup>
                     </select>
+                </div>
+                <div class="dateSelect">
+                    <label>Departing</label>
+                    <input type="date" data-date-inline-picker="false" id="departureDate"/>
                 </div>
             </div>
         </div>
