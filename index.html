@@ -328,6 +328,7 @@
         	flex-flow: row;
         	align-items: flex-start;
             width: 100%;
+        	margin-top: 30px;
         }
 
         .fSContainerBottom .bottomHalf {
@@ -354,7 +355,6 @@
         	height: 40px;
         	font-size: 15px;
         	margin-left: 40px;
-        	margin-top: 30px;
         	padding-left: 10px;
         	border-radius: 5px;
             cursor: pointer;
@@ -377,7 +377,6 @@
         	height: 40px;
         	border-radius: 0px;
         	font-size: 15px;
-        	margin-top: 30px;
         	text-align: center;
         	outline: 0px solid #3198ff;
         	border-left: 0px;
@@ -470,6 +469,7 @@
         .dateSelect {
             border: 1px solid #747474;
             border-radius: 5px;
+        	height: 40px;
             overflow: hidden;
         }
         
@@ -501,9 +501,19 @@
         #searchFlightsButton:hover {
             width: 250px;
         }
-        #searchFlightsButton:hover {
-            width: 250px;
+        
+        #returnDateSelect {
+            position: absolute;
+            margin-left: 816px;
+            margin-top: -40px;
+            width: 352px;
+            display: none;
         }
+        
+        #returnDateSelect label {
+            margin-right: 24px;
+        }
+        
     </style>
     <script>
         
@@ -667,6 +677,45 @@
             }
         }
         
+        function updateFlightType() {
+            var tripIndex = document.getElementById("tripType").selectedIndex;
+            var returnDate = document.getElementById("returnDateSelect")
+            
+            if (tripIndex == 1){
+                returnDate.style.display = "block";
+            }
+            else{
+                returnDate.style.display = "none";
+            }
+        }
+        
+        function searchFlights() {
+            var searchFlight = {};
+            searchFlight.tripType = document.getElementById("tripType").value;
+            searchFlight.passengerCount = document.getElementById("passengerCount").value;
+            searchFlight.departureLocation = document.getElementById("flightFrom").value;
+            searchFlight.arrivalLocation = document.getElementById("flightTo").value;
+            var depDate = document.getElementById("departureDate").value;
+            searchFlight.departureDate = depDate;
+            searchFlight.returnDate = "No Return Flight";
+            
+            if (searchFlight.tripType == "return"){
+                var retDate = document.getElementById("returnDate").value;
+                if (retDate == depDate){
+                    alert("Error\n\nReturn Date must not be the same as the Departure Date");
+                }
+                else if (retDate < depDate){
+                    alert("Error\n\nReturn Date must not be before the Departure Date");
+                }
+                else {
+                    searchFlight.returnDate = retDate;
+                    sessionStorage.searchFlight = JSON.stringify(searchFlight);
+                    console.log(JSON.parse(sessionStorage.searchFlight));
+                }
+            }
+            
+            //sessionStorage.flightToSearch = 
+        }
     </script>
 </head>
 
@@ -691,7 +740,7 @@
         </div>
         <div class="fSContainerBottom">
             <div class="topHalf">
-                <select name="tripType" id="tripType">
+                <select name="tripType" id="tripType" onChange="updateFlightType()">
                     <option value="oneway">One Way</option>
                     <option value="return">Return Trip</option>
                 </select>
@@ -755,9 +804,13 @@
                     <label>Departing</label>
                     <input type="date" data-date-inline-picker="false" id="departureDate"/>
                 </div>
+                <div class="dateSelect" id="returnDateSelect">
+                    <label>Return</label>
+                    <input type="date" data-date-inline-picker="false" id="returnDate"/>
+                </div>
             </div>
             <br>
-            <button id="searchFlightsButton">Search Flights</button>
+            <button id="searchFlightsButton" onClick="searchFlights()">Search Flights</button>
         </div>
     </div>
     
