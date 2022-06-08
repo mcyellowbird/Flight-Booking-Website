@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<head>
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <title>Flight Booking Website</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
+
+        * {
+        	font-family: Oxygen;
+        	user-select: none;
+        }
+
+        body {
+        	background-color: rgb(238, 245, 255);
+        }
+
+        input {
+        	width: 300px;
+        	height: 40px;
+        	font-size: 14px;
+        	border: none;
+        	border-bottom: 1px solid lightgrey;
+        	outline: none;
+        }
+
+        input:focus {
+        	border-bottom: 1px solid #3b9cff;
+        }
+
+        a {
+        	color: #fafafa;
+        	padding-left: 6%;
+        	padding-bottom: 5px;
+        }
+
+        h2 {
+        	color: #3b9cff;
+        	font-weight: bold;
+        	text-align: center;
+        }
+
+        button {
+        	color: #fafafa;
+        	width: 250px;
+        	height: 40px;
+        	border: 1px solid black;
+        	margin-bottom: 10px;
+        	border-radius: 10px;
+        	font-size: 16px;
+        	background-color: #3b9cff;
+        	transition: width 0.2s;
+        }
+
+        button:hover {
+        	outline: none;
+        	cursor: pointer;
+        	background-color: #5eaeff;
+        	width: 280px;
+
+        }
+
+        button:focus {
+        	outline: none;
+        	background-color: #3198ff;
+        }
+        
+        .break_60 {
+            width: 100%;
+            height: 60px;
+        }
+        
+        .banner {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(129deg, rgba(43,25,242,1) 37%, rgba(59,156,255,1) 49%, rgba(12,17,255,1) 100%);
+            
+        	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: row;
+        	align-items: center;
+        }
+                
+        .flightInfoBar {
+            position: absolute;
+        	display: flex;
+        	justify-content: space-between;
+        	flex-flow: row;
+        	align-items: center;
+            
+        	background-color: rgb(238, 245, 255);
+            
+        	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            
+            border-radius: 50px;
+            height: 60px;
+            width: 1200px;
+        }
+        
+        .flightInfoBar div {
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: row;
+        	align-items: center;
+            
+            width: 200px;
+            height: 100%;
+            border-radius: 50px;
+        }
+        
+        .flightInfoBar div a {
+            padding-top: 5px;
+            color: black;
+        }
+        
+        .activeBar {
+            background: #3b9cff;
+        }
+        
+        .activeBar img {
+            filter: brightness(0);
+        }
+        
+        .title {
+            padding-top: 20px;
+            text-align: center;
+            font-size: 40px;
+        }
+        
+    </style>
+    <script>
+        
+        var activeUser = JSON.parse(localStorage.getItem('currentUser'));
+        var currentSearch = JSON.parse(sessionStorage.getItem('searchFlight'));
+        
+        function setup(){
+            var title = document.getElementById("title");
+            title.innerHTML = currentSearch.departureLocation + " to " + currentSearch.arrivalLocation;
+        }
+        
+    </script>
+</head>
+
+<body onload="setup()">
+    <div class="break_60"></div>
+    <div class="banner">
+        <div class="flightInfoBar">
+            <div class="activeBar">
+                <img src="images/planeside.png" height="25px"/>
+                <a>Flights</a>
+            </div>
+            <div>
+                <img src="images/briefcase.png" height="25px"/>
+                <a>Baggage</a>
+            </div>
+            <div>
+                <img src="images/seat.png" height="25px"/>
+                <a>Seats</a>
+            </div>
+            <div>
+                <img src="images/user.png" height="25px"/>
+                <a>Booking Details</a>
+            </div>
+            <div>
+                <img src="images/dollar.png" height="25px"/>
+                <a>Review & Pay</a>
+            </div>
+        </div>
+    </div>
+    <h3 class="title" id="title">Departure to Arrival</h3>
+</body>

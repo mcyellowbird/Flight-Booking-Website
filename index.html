@@ -694,10 +694,12 @@
             searchFlight.tripType = document.getElementById("tripType").value;
             searchFlight.passengerCount = document.getElementById("passengerCount").value;
             searchFlight.departureLocation = document.getElementById("flightFrom").value;
+            searchFlight.departureLocationCode = document.getElementById("flightFrom").tagName;
             searchFlight.arrivalLocation = document.getElementById("flightTo").value;
+            searchFlight.arrivalLocationCode = document.getElementById("flightTo").tagName;
             var depDate = document.getElementById("departureDate").value;
             searchFlight.departureDate = depDate;
-            searchFlight.returnDate = "No Return Flight";
+            searchFlight.returnDate = null;
             
             if (searchFlight.tripType == "return"){
                 var retDate = document.getElementById("returnDate").value;
@@ -710,11 +712,13 @@
                 else {
                     searchFlight.returnDate = retDate;
                     sessionStorage.searchFlight = JSON.stringify(searchFlight);
-                    console.log(JSON.parse(sessionStorage.searchFlight));
+                    window.location = "SelectFlight.html";
                 }
             }
-            
-            //sessionStorage.flightToSearch = 
+            else{
+                sessionStorage.searchFlight = JSON.stringify(searchFlight);
+                window.location = "SelectFlight.html";
+            }
         }
     </script>
 </head>
@@ -766,18 +770,18 @@
                     <label>From</label>
                     <select class="flightToFrom" id="flightFrom">
                         <optgroup label="Australia">
-                            <option value="Sydney Airport - SYD" selected>Sydney, Australia</option>
-                            <option value="Melbourne Airport - MEL">Melbourne, Australia</option>
-                            <option value="Brisbane Airport - BNE">Brisbane, Australia</option>
-                            <option value="Perth Airport - PER">Perth, Australia</option>
-                            <option value="Adelaide Airport - ADL">Adelaide, Australia</option>
-                            <option value="Gold Coast Airport - OOL">Coolangatta, Australia</option>
-                            <option value="Cairns Airport - CNS">Cairns, Australia</option>
-                            <option value="Hobart Airport - HBA">Hobart, Australia</option>
-                            <option value="Canberra Airport - CBR">Canberra, Australia</option>
+                            <option value="Sydney Airport" name="SYD" selected>Sydney, Australia</option>
+                            <option value="Melbourne Airport" name="MEL">Melbourne, Australia</option>
+                            <option value="Brisbane Airport" name="BNE">Brisbane, Australia</option>
+                            <option value="Perth Airport" name="PER">Perth, Australia</option>
+                            <option value="Adelaide Airport" name="ADL">Adelaide, Australia</option>
+                            <option value="Gold Coast Airport" name="OOL">Coolangatta, Australia</option>
+                            <option value="Cairns Airport" name="CNS">Cairns, Australia</option>
+                            <option value="Hobart Airport" name="HBA">Hobart, Australia</option>
+                            <option value="Canberra Airport" name="CBR">Canberra, Australia</option>
                         </optgroup>
                         <optgroup label="New Zealand">
-                            <option value="Auckland Airport - AKL">Auckland, New Zealand</option>
+                            <option value="Auckland Airport" name="AKL">Auckland, New Zealand</option>
                         </optgroup>
                     </select>
                 </div>
@@ -785,18 +789,18 @@
                     <label>To</label>
                     <select class="flightToFrom" id="flightTo">
                         <optgroup label="Australia">
-                            <option value="Sydney Airport - SYD" selected>Sydney, Australia</option>
-                            <option value="Melbourne Airport - MEL">Melbourne, Australia</option>
-                            <option value="Brisbane Airport - BNE">Brisbane, Australia</option>
-                            <option value="Perth Airport - PER">Perth, Australia</option>
-                            <option value="Adelaide Airport - ADL">Adelaide, Australia</option>
-                            <option value="Gold Coast Airport - OOL">Coolangatta, Australia</option>
-                            <option value="Cairns Airport - CNS">Cairns, Australia</option>
-                            <option value="Hobart Airport - HBA">Hobart, Australia</option>
-                            <option value="Canberra Airport - CBR">Canberra, Australia</option>
+                            <option value="Sydney Airport" name="SYD">Sydney, Australia</option>
+                            <option value="Melbourne Airport" name="MEL" selected>Melbourne, Australia</option>
+                            <option value="Brisbane Airport" name="BNE">Brisbane, Australia</option>
+                            <option value="Perth Airport" name="PER">Perth, Australia</option>
+                            <option value="Adelaide Airport" name="ADL">Adelaide, Australia</option>
+                            <option value="Gold Coast Airport" name="OOL">Coolangatta, Australia</option>
+                            <option value="Cairns Airport" name="CNS">Cairns, Australia</option>
+                            <option value="Hobart Airport" name="HBA">Hobart, Australia</option>
+                            <option value="Canberra Airport" name="CBR">Canberra, Australia</option>
                         </optgroup>
                         <optgroup label="New Zealand">
-                            <option value="Auckland Airport - AKL">Auckland, New Zealand</option>
+                            <option value="Auckland Airport" name="AKL">Auckland, New Zealand</option>
                         </optgroup>
                     </select>
                 </div>
