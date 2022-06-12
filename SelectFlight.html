@@ -208,6 +208,7 @@
         
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="webScraper.js"></script>
     <script>
         
         var activeUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -261,9 +262,11 @@
             var urlQuery = "https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc + "?callback=";
             console.log(urlQuery);
 
-            var flightTime = $.getScript("webScraper.js", function(){
-                scrapeInfo(urlQuery);
-            });
+            var flightTime = scrapeInfo(urlQuery);
+            
+//            var flightTime = $.getScript("webScraper.js", function(){
+//                scrapeInfo(urlQuery);
+//            });
             console.log(flightTime);
         }
         
