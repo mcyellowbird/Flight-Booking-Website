@@ -515,7 +515,7 @@
         }
         
     </style>
-    <script>
+    <script>        
         
         var activeUser = localStorage.getItem('currentUser');
         
@@ -693,10 +693,15 @@
             var searchFlight = {};
             searchFlight.tripType = document.getElementById("tripType").value;
             searchFlight.passengerCount = document.getElementById("passengerCount").value;
-            searchFlight.departureLocation = document.getElementById("flightFrom").value;
-            searchFlight.departureLocationCode = document.getElementById("flightFrom").tagName;
-            searchFlight.arrivalLocation = document.getElementById("flightTo").value;
-            searchFlight.arrivalLocationCode = document.getElementById("flightTo").tagName;
+            
+            var flightFromDropdown = document.getElementById("flightFrom");
+            searchFlight.departureLocation = flightFromDropdown.value;
+            searchFlight.departureLocationCode = flightFromDropdown.options[flightFromDropdown.selectedIndex].getAttribute("name");
+            
+            var flightToDropdown = document.getElementById("flightTo");
+            searchFlight.arrivalLocation = flightToDropdown.value;
+            searchFlight.arrivalLocationCode = flightToDropdown.options[flightToDropdown.selectedIndex].getAttribute("name");
+            
             var depDate = document.getElementById("departureDate").value;
             searchFlight.departureDate = depDate;
             searchFlight.returnDate = null;

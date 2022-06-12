@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CORS - HTML5Rocks and NY Times</title>
+<style>
+	#ResponseContent {
+		width:66%;
+		padding:1% 2%;
+		background-color:#ccc;
+		margin-top:20px;
+	}
+	h2 {
+		margin:0;
+		padding:0;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#btnhtml5rocks').click(function() {
+			$('#ResponseContent h2').html('Response Content');
+			$('#ResponseContent div').html('');
+			$.ajax({
+				type: 'GET',
+				url: 'https://www.html5rocks.com/en/tutorials/file/xhr2/',
+				success: function(response) {
+					var article = $(response).find('article').first().html();
+					$('#ResponseContent h2').html('Response Content - from HTML5Rocks');
+					$('#ResponseContent div').html(article);
+				}
+			}).fail(function() {
+				alert("failed!");
+			});;
+		});
+		$('#btnnytimes').click(function() {
+			$('#ResponseContent h2').html('Response Content');
+			$('#ResponseContent div').html('');
+			$.ajax({
+				type: 'GET',
+				url: 'http://www.nytimes.com/',
+				success: function(response) {
+					var article = $(response).find('article').first().html();
+					$('#ResponseContent h2').html('Response Content - from NY Times');
+					$('#ResponseContent div').html(article);
+				}
+			}).fail(function() {
+				alert("failed!");
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<button id="btnhtml5rocks">Fetch HTML5 Rocks</button>
+	<button id="btnnytimes">Fetch NY Times</button>
+	<br>
+	<div id="ResponseContent">
+		<h2>Response Content</h2>
+		<div></div>
+	</div>
+</body>
+</html>
