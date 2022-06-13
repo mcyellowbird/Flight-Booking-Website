@@ -326,8 +326,6 @@
                     }
                     
                     randomTimes[i] = depTimes[randomIndex];
-                    
-                    console.log("\nRandom Times Array after addition:" + randomTimes);
                 }
                 randomTimes.filter(function (el) {return el != null;});
                 randomTimes.sort(function(a, b){return a - b});
@@ -336,10 +334,8 @@
                 
                 var newFlight = "";
                 for (var i = 0; i < randomTimes.length; i++){
-                    
-                    console.log("Price for " + i);
                     var tempPrice = 100 * (parseInt(flightTimeArray[0]) + (flightTimeArray[1] / 60));
-                    tempPrice = Math.floor(Math.random() * ((tempPrice * 2) - (tempPrice / 2)) + (tempPrice / 2));
+                    tempPrice = Math.floor(Math.random() * ((tempPrice * 1.4) - (tempPrice / 1.4)) + (tempPrice / 1.4));
                     tempPrice = (Math.round(tempPrice * 100) / 100).toFixed(2);
                     
                     newFlight += '<div class="flight">';
