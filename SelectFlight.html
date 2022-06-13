@@ -208,7 +208,6 @@
         
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="webScraper.js"></script>
     <script>
         
         var activeUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -250,30 +249,128 @@
                 document.getElementById("arrivalFlight").style.display = "none";
             }
             
-            generateFlights();
+            makeURL();
         }
         
-        function generateFlights() {
-            var departureTimes = ["6:00am", "7:30am", "9:00am", "10:00am", "1:00pm", "3:00pm", "5:30pm"];
-
+        var flightTimeArray = [];
+        
+        function makeURL() {
             var depLoc = currentSearch.departureLocationCode;
             var arrLoc = currentSearch.arrivalLocationCode;
             
-            var urlQuery = "https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc + "?callback=";
-            console.log(urlQuery);
-
-            var flightTime = scrapeInfo(urlQuery);
+            var urlQuery = "https://cors-anywhere.herokuapp.com/https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc;
             
-//            var flightTime = $.getScript("webScraper.js", function(){
-//                scrapeInfo(urlQuery);
-//            });
-            console.log(flightTime);
+            makeAjaxQuery(urlQuery);
         }
         
-        function selectFlight(){
-            console.log("Flight Selected");
-        }
         
+        // Ajax Query
+        
+        function makeAjaxQuery(url){
+                var xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function() {
+                    readyStateChangeHandler(xhttp);
+                }
+
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+
+            function readyStateChangeHandler(xhttp){
+                if (xhttp.readyState == XMLHttpRequest.DONE){
+                    if(xhttp.status == 200){
+                        handleStatusSuccess(xhttp);
+                    }
+                    else{
+                        handleStatusFailure(xhttp);
+                    }
+                }
+            }
+
+            function handleStatusFailure(xhttp){
+                alert("AJAX request fail");
+                alert("readyState = " + xhttp.readyState);
+                alert("status = " + xhttp.status);
+            }
+
+            function handleStatusSuccess(xhttp){
+                var result = $(xhttp.responseText);
+                
+                var flightTime = $('#flyingtime', result).text();
+                
+                var hours = flightTime.substring(0, flightTime.indexOf(' '));
+                var minutes = flightTime.split(', ')[1];
+                minutes = minutes.substring(0, minutes.indexOf(' '));
+                //var minutes = flightTime.substring(0, flightTime.indexOf(', '));
+                console.log(hours);
+                console.log(minutes);
+                
+                flightTimeArray[0] = hours;
+                flightTimeArray[1] = minutes;
+                generateFlights();
+            }
+        
+            function generateFlights(){
+                var depTimes = [6, 7.5, 9, 10.5, 12, 13.5, 15, 16.5, 18, 19.5, 21];
+                
+                var randFlightAmount = (Math.floor(Math.random() * depTimes.length) + 2);
+                var randomTimes = [];
+                for (var i = 0; i < randFlightAmount; i++){
+                    randomTimes[i] = depTimes
+                }
+                randomTimes.sort();
+                
+                var departureContainer = document.getElementById("departingContainer");
+                
+                var newFlight = "";
+                for (var i = 0; i < randFlightAmount; i++){
+                    
+                    newFlight += '<div class="flight">';
+                    newFlight += '<div class="time">';
+                    
+                    // Departure Time
+                    var tempTimeHour = calcTime(depTimes[i]);
+                    
+                    newFlight += '<span><a>' + tempTimeHour + '</a>';
+                    
+                    newFlight += '<br><a style="font-size:15px;"><b style="font-size:20px;">' + currentSearch.departureLocationCode + '</b> DEPARTURE</a></span></div>';
+                    newFlight += '<img src="images/planeside.png" style="filter:brightness(0%); height: 20px;"/>';
+                    
+                    newFlight += '<div class="time">';
+                    
+                    // Arrival Time
+                    var newTime = depTimes[i] + parseInt(flightTimeArray[0]);
+                    newTime += flightTimeArray[1] / 60;
+                    var tempTimeHour = calcTime(newTime);
+                    
+                    newFlight += '<span><a>' + tempTimeHour + '</a>';
+                    
+                    newFlight += '<br><a style="font-size:15px;"><b style="font-size:20px;">' + currentSearch.arrivalLocationCode + '</b> ARRIVAL</a></span></div>';
+                    newFlight += '';
+                    newFlight += '</div>';
+                    newFlight += '</div>';
+                }
+                
+                departureContainer.innerHTML = newFlight;
+                console.log("Hour: " + flightTimeArray[0] + " Minute: " + flightTimeArray[1]);
+            }
+        
+        function calcTime(time){
+            var tempTimeSuffix = "";
+            if (time >= 12 && time <= 23){
+                tempTimeSuffix = "pm";
+            }
+            else{
+                tempTimeSuffix = "am";
+            }
+            var hour = Math.floor(Math.abs(time));
+            if (hour > 12){
+                hour -= 12;
+            }
+            var min = Math.floor((Math.abs(time) * 60) % 60);
+            return (hour < 10 ? "0" : "") + hour + ":" + (min < 10 ? "0" : "") + min + tempTimeSuffix;
+        }
     </script>
 </head>
 
@@ -314,31 +411,33 @@
             <h2>Departing Flight</h2>
             <h3 id="depToArr">Departure to Arrival</h3>
             <h4 id="depDate">Day Date Month Year</h4>
-            <div class="flight">
-                <div class="time">
-                    <span>
-                        <a>6:00am</a>
-                        <br>
-                        <a>CODE - Departure</a>
-                    </span>
-                </div>
-                <img src="images/planeside.png" style="filter:brightness(0%); height: 20px;">
-                <div class="time">
-                    <span>
-                        <a>6:00am</a>
-                        <br>
-                        <a>CODE - Arrival</a>
-                    </span>
-                </div>
-                <div class="flightDuration">
-                    <a>Direct flight - 1hr 30min travel</a>
-                </div>
-                <div>
-                    <a>from</a>
-                    <a id="price">$100</a>
-                </div>
-                <div>
-                    <button id="selectFlightButton" onClick="selectFlight()">Select Flight</button>
+            <div id="departingContainer">
+                <div class="flight">
+                    <div class="time">
+                        <span>
+                            <a>6:00am</a>
+                            <br>
+                            <a>CODE - Departure</a>
+                        </span>
+                    </div>
+                    <img src="images/planeside.png" style="filter:brightness(0%); height: 20px;">
+                    <div class="time">
+                        <span>
+                            <a>6:00am</a>
+                            <br>
+                            <a>CODE - Arrival</a>
+                        </span>
+                    </div>
+                    <div class="flightDuration">
+                        <a>Direct flight - 1hr 30min travel</a>
+                    </div>
+                    <div>
+                        <a>from</a>
+                        <a id="price">$100</a>
+                    </div>
+                    <div>
+                        <button id="selectFlightButton" onClick="selectFlight()">Select Flight</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -347,31 +446,33 @@
             <h2>Returning Flight</h2>
             <h3 id="arrToDep">Arrival to Departure</h3>
             <h4 id="arrDate">Day Date Month Year</h4>
-            <div class="flight">
-                <div class="time">
-                    <span>
-                        <a>6:00am</a>
-                        <br>
-                        <a>CODE - Arrival</a>
-                    </span>
-                </div>
-                <img src="images/planeside.png" style="filter:brightness(0%); height: 20px;">
-                <div class="time">
-                    <span>
-                        <a>6:00am</a>
-                        <br>
-                        <a>CODE - Departure</a>
-                    </span>
-                </div>
-                <div class="flightDuration">
-                    <a>Direct flight - 1hr 30min travel</a>
-                </div>
-                <div>
-                    <a>from</a>
-                    <a id="price">$100</a>
-                </div>
-                <div>
-                    <button id="selectFlightButton" onClick="selectFlight()">Select Flight</button>
+            <div id="arrivingContainer">
+                <div class="flight">
+                    <div class="time">
+                        <span>
+                            <a>6:00am</a>
+                            <br>
+                            <a>CODE - Arrival</a>
+                        </span>
+                    </div>
+                    <img src="images/planeside.png" style="filter:brightness(0%); height: 20px;">
+                    <div class="time">
+                        <span>
+                            <a>6:00am</a>
+                            <br>
+                            <a>CODE - Departure</a>
+                        </span>
+                    </div>
+                    <div class="flightDuration">
+                        <a>Direct flight - 1hr 30min travel</a>
+                    </div>
+                    <div>
+                        <a>from</a>
+                        <a id="price">$100</a>
+                    </div>
+                    <div>
+                        <button id="selectFlightButton" onClick="selectFlight()">Select Flight</button>
+                    </div>
                 </div>
             </div>
         </div>
