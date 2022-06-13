@@ -200,6 +200,7 @@
         .flight div:last-child {
             width: auto;
             margin-right: auto;
+            margin-left: 5px;
         }
         
         .flight div span a:first-child {
@@ -311,25 +312,41 @@
             }
         
             function generateFlights(){
-                var depTimes = [6, 7.5, 9, 10.5, 12, 13.5, 15, 16.5, 18, 19.5, 21];
+                var depTimes = [6, 7.5, 9, 10.5, 12, 13.5, 15, 16.5, 18, 19.5, 21, 23];
                 
-                var randFlightAmount = (Math.floor(Math.random() * depTimes.length) + 2);
+                var randFlightAmount = Math.floor(Math.random() * (depTimes.length - 2 + 1)) + 2;
+                
                 var randomTimes = [];
+                
                 for (var i = 0; i < randFlightAmount; i++){
-                    randomTimes[i] = depTimes[i];
+                    var randomIndex = Math.floor(Math.random() * depTimes.length);
+                    
+                    while (randomTimes.includes(depTimes[randomIndex])){
+                        randomIndex = Math.floor(Math.random() * depTimes.length);
+                    }
+                    
+                    randomTimes[i] = depTimes[randomIndex];
+                    
+                    console.log("\nRandom Times Array after addition:" + randomTimes);
                 }
-                randomTimes.sort();
+                randomTimes.filter(function (el) {return el != null;});
+                randomTimes.sort(function(a, b){return a - b});
                 
                 var departureContainer = document.getElementById("departingContainer");
                 
                 var newFlight = "";
-                for (var i = 0; i < randFlightAmount; i++){
+                for (var i = 0; i < randomTimes.length; i++){
+                    
+                    console.log("Price for " + i);
+                    var tempPrice = 100 * (parseInt(flightTimeArray[0]) + (flightTimeArray[1] / 60));
+                    tempPrice = Math.floor(Math.random() * ((tempPrice * 2) - (tempPrice / 2)) + (tempPrice / 2));
+                    tempPrice = (Math.round(tempPrice * 100) / 100).toFixed(2);
                     
                     newFlight += '<div class="flight">';
                     newFlight += '<div class="time">';
                     
                     // Departure Time
-                    var tempTimeHour = calcTime(depTimes[i]);
+                    var tempTimeHour = calcTime(randomTimes[i]);
                     
                     newFlight += '<span><a>' + tempTimeHour + '</a>';
                     
@@ -339,7 +356,7 @@
                     newFlight += '<div class="time">';
                     
                     // Arrival Time
-                    var newTime = depTimes[i] + parseInt(flightTimeArray[0]);
+                    var newTime = randomTimes[i] + parseInt(flightTimeArray[0]);
                     newTime += flightTimeArray[1] / 60;
                     var tempTimeHour = calcTime(newTime);
                     
@@ -350,11 +367,11 @@
                     newFlight += '<a>Direct Flight - ' + flightTimeText;
                     newFlight += '</a></div>';
                     newFlight += '<div><a>from</a>';
-                    newFlight += '<a id="price">$100</a></div>'
+                    newFlight += '<a id="price">$' + tempPrice + '</a></div>'
                     newFlight += '<div><button id="selectFlightButton onClick="selectFlight()">Select Flight</button></div>';
                     newFlight += '</div>';
                     newFlight += '</div>';
-                    newFlight += '</div>';
+                    newFlight += '</div><br>';
                 }
                 
                 departureContainer.innerHTML = newFlight;
