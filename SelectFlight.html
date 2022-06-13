@@ -253,12 +253,13 @@
         }
         
         var flightTimeArray = [];
+        var flightTimeText = "";
         
         function makeURL() {
             var depLoc = currentSearch.departureLocationCode;
             var arrLoc = currentSearch.arrivalLocationCode;
             
-            var urlQuery = "https://cors-anywhere.herokuapp.com/https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc;
+            var urlQuery = "https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc;
             
             makeAjaxQuery(urlQuery);
         }
@@ -298,13 +299,11 @@
                 var result = $(xhttp.responseText);
                 
                 var flightTime = $('#flyingtime', result).text();
+                flightTimeText = flightTime;
                 
                 var hours = flightTime.substring(0, flightTime.indexOf(' '));
                 var minutes = flightTime.split(', ')[1];
                 minutes = minutes.substring(0, minutes.indexOf(' '));
-                //var minutes = flightTime.substring(0, flightTime.indexOf(', '));
-                console.log(hours);
-                console.log(minutes);
                 
                 flightTimeArray[0] = hours;
                 flightTimeArray[1] = minutes;
@@ -317,7 +316,7 @@
                 var randFlightAmount = (Math.floor(Math.random() * depTimes.length) + 2);
                 var randomTimes = [];
                 for (var i = 0; i < randFlightAmount; i++){
-                    randomTimes[i] = depTimes
+                    randomTimes[i] = depTimes[i];
                 }
                 randomTimes.sort();
                 
@@ -347,13 +346,18 @@
                     newFlight += '<span><a>' + tempTimeHour + '</a>';
                     
                     newFlight += '<br><a style="font-size:15px;"><b style="font-size:20px;">' + currentSearch.arrivalLocationCode + '</b> ARRIVAL</a></span></div>';
-                    newFlight += '';
+                    newFlight += '<div class="flightDuration">';
+                    newFlight += '<a>Direct Flight - ' + flightTimeText;
+                    newFlight += '</a></div>';
+                    newFlight += '<div><a>from</a>';
+                    newFlight += '<a id="price">$100</a></div>'
+                    newFlight += '<div><button id="selectFlightButton onClick="selectFlight()">Select Flight</button></div>';
+                    newFlight += '</div>';
                     newFlight += '</div>';
                     newFlight += '</div>';
                 }
                 
                 departureContainer.innerHTML = newFlight;
-                console.log("Hour: " + flightTimeArray[0] + " Minute: " + flightTimeArray[1]);
             }
         
         function calcTime(time){
