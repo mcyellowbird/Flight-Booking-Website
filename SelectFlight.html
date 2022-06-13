@@ -259,7 +259,7 @@
             var depLoc = currentSearch.departureLocationCode;
             var arrLoc = currentSearch.arrivalLocationCode;
             
-            var urlQuery = "https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc;
+            var urlQuery = "https://cors-anywhere.herokuapp.com/https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc;
             
             makeAjaxQuery(urlQuery);
         }
