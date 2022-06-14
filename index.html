@@ -216,30 +216,36 @@
         }
 
         button {
-        	color: #fafafa;
-        	width: 250px;
-        	height: 40px;
-        	border: 1px solid black;
-        	margin-bottom: 10px;
-        	border-radius: 10px;
-        	font-size: 16px;
-        	background-color: #3b9cff;
-        	transition: width 0.2s;
+        	color: #3b9cff;
+            font-weight: 700;
+        	width: 180px;
+        	height: 50px;
+        	border: 2px solid #3b9cff;
+        	border-radius: 20px;
+        	font-size: 20px;
+        	background-color: transparent;
+            transition: background-color .2s, color .2s;
         }
 
         button:hover {
         	outline: none;
         	cursor: pointer;
         	background-color: #5eaeff;
-        	width: 280px;
-
+        	color: white;
         }
-
+        
         button:active {
         	outline: none;
         	background-color: #3198ff;
         }
-
+        
+        .signupBox button, .loginBox button {
+            font-size: 16px;
+        	width: 150px;
+        	height: 40px;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
 
         .loginBox {
         	z-index: 2;
@@ -255,7 +261,7 @@
         	align-items: center;
         	flex-direction: column;
 
-        	border-radius: 30px;
+        	border-radius: 15px;
         	background-color: white;
         	border: 5px solid white;
         	color: #fafafa;
@@ -270,8 +276,8 @@
         .fSContainerTop {
         	width: 1200px;
         	height: 80px;
-        	border-top-left-radius: 10px;
-        	border-top-right-radius: 10px;
+        	border-top-left-radius: 15px;
+        	border-top-right-radius: 15px;
         	background-color: white;
         	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 
@@ -312,14 +318,13 @@
         .fSContainerBottom {
         	width: 1200px;
         	height: 250px;
-        	border-bottom-left-radius: 10px;
-        	border-bottom-right-radius: 10px;
+        	border-bottom-left-radius: 15px;
+        	border-bottom-right-radius: 15px;
         	background-color: white;
         	box-shadow: 0px -15px 0 #fff, 0 1px 15px rgba(0, 0, 0, 0.2);
         	display: flex;
         	flex-flow: column;
         	align-items: flex-start;
-        	/*box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);*/
         }
         
         
@@ -496,10 +501,6 @@
             align-self: flex-end;
             margin-right: 30px;
             margin-top: 10px;
-        }
-        
-        #searchFlightsButton:hover {
-            width: 250px;
         }
         
         #returnDateSelect {
@@ -775,18 +776,26 @@
                     <label>From</label>
                     <select class="flightToFrom" id="flightFrom">
                         <optgroup label="Australia">
-                            <option value="Sydney Airport" name="SYD" selected>Sydney, Australia</option>
-                            <option value="Melbourne Airport" name="MEL">Melbourne, Australia</option>
-                            <option value="Brisbane Airport" name="BNE">Brisbane, Australia</option>
-                            <option value="Perth Airport" name="PER">Perth, Australia</option>
-                            <option value="Adelaide Airport" name="ADL">Adelaide, Australia</option>
-                            <option value="Gold Coast Airport" name="OOL">Coolangatta, Australia</option>
-                            <option value="Cairns Airport" name="CNS">Cairns, Australia</option>
-                            <option value="Hobart Airport" name="HBA">Hobart, Australia</option>
-                            <option value="Canberra Airport" name="CBR">Canberra, Australia</option>
+                            <option value="Sydney Airport" name="SYD" selected>Sydney</option>
+                            <option value="Melbourne Airport" name="MEL">Melbourne</option>
+                            <option value="Brisbane Airport" name="BNE">Brisbane</option>
+                            <option value="Canberra Airport" name="CBR">Canberra</option>
+                            <option value="Perth Airport" name="PER">Perth</option>
+                            <option value="Adelaide Airport" name="ADL">Adelaide</option>
+                            <option value="Gold Coast Airport" name="OOL">Gold Coast</option>
+                            <option value="Cairns Airport" name="CNS">Cairns</option>
+                            <option value="Hobart Airport" name="HBA">Hobart</option>
+                            <option value="Launceston Airport" name="LST">Launceston</option>
+                            <option value="Newcastle - Port Stephens Airport" name="NTL">Newcastle - Port Stephens</option>
+                            <option value="Mackay Airport" name="MKY">Mackay</option>
+                            <option value="Sunshine Coast Airport" name="MCY">Sunshine Coast</option>
+                            <option value="Townsville Airport" name="TSV">Townsville</option>
+                            <option value="Uluru Airport" name="AYQ">Uluru - Ayers Rock</option>
+                            <option value="Whitsunday Coast Airport" name="PPP">Whitsunday Coast</option>
+                            <option value="Hamilton Island Airport" name="HTI">Hamilton Island</option>
                         </optgroup>
                         <optgroup label="New Zealand">
-                            <option value="Auckland Airport" name="AKL">Auckland, New Zealand</option>
+                            <option value="Auckland Airport" name="AKL">Auckland</option>
                         </optgroup>
                     </select>
                 </div>
@@ -799,7 +808,7 @@
                             <option value="Brisbane Airport" name="BNE">Brisbane, Australia</option>
                             <option value="Perth Airport" name="PER">Perth, Australia</option>
                             <option value="Adelaide Airport" name="ADL">Adelaide, Australia</option>
-                            <option value="Gold Coast Airport" name="OOL">Coolangatta, Australia</option>
+                            <option value="Gold Coast Airport" name="OOL">Gold Coast, Australia</option>
                             <option value="Cairns Airport" name="CNS">Cairns, Australia</option>
                             <option value="Hobart Airport" name="HBA">Hobart, Australia</option>
                             <option value="Canberra Airport" name="CBR">Canberra, Australia</option>

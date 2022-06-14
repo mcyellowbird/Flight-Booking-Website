@@ -3,7 +3,7 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.png">
     <title>Flight Booking Website</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
 
         * {
         	font-family: Oxygen;
@@ -32,19 +32,22 @@
         }
 
         button {
-        	color: #fafafa;
-        	width: 250px;
+        	color: #3b9cff;
+            font-weight: 700;
+        	width: 150px;
         	height: 40px;
-        	border: 1px solid black;
-        	border-radius: 10px;
+        	border: 2px solid #3b9cff;
+        	border-radius: 20px;
         	font-size: 16px;
-        	background-color: #3b9cff;
+        	background-color: transparent;
+            transition: background-color .2s, color .2s;
         }
 
         button:hover {
         	outline: none;
         	cursor: pointer;
         	background-color: #5eaeff;
+        	color: white;
 
         }
 
@@ -103,16 +106,23 @@
             border-radius: 50px;
         }
         
-        .flightInfoBar div a {
-            color: black;
-        }
-        
         .activeBar {
-            background: #3b9cff;
+            position: absolute;
+            background: linear-gradient(129deg, rgba(43,25,242,1) 0%, rgba(59,156,255,1) 100%);
         }
         
-        .activeBar img {
-            filter: brightness(0);
+        .infoBarText {
+            font-weight: 700;
+        }
+        
+        .infoBarTextActive {
+            font-weight: 700;
+            color: white;
+            filter: brightness(0) invert(1);
+        }
+        
+        .infoBarTextActive img {
+            filter: brightness(0) invert(1);
         }
         
         .title {
@@ -134,7 +144,7 @@
             align-self: center;
         }
         
-        .arrivalFlight {
+        .returnFlight {
         	display: flex;
         	justify-content: center;
         	flex-flow: column;
@@ -144,8 +154,9 @@
         .flight {
             height: 100px;
             width: 1200px;
+            border-radius: 15px;
             
-        	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        	box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             background-color: white;
             
@@ -153,6 +164,19 @@
         	flex-direction: row;
             justify-content: flex-start;
         	align-items: center;
+            transition: box-shadow .2s;
+        }
+        
+        .flight:hover {
+        	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .flightActive {
+        	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .flightActive:hover {
+        	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         
         .flight a {
@@ -200,11 +224,26 @@
         .flight div:last-child {
             width: auto;
             margin-right: auto;
-            margin-left: 5px;
+            margin-left: 25px;
         }
         
         .flight div span a:first-child {
             font-size: 25px;
+        }
+        
+        .selectFlightButtonActive {
+            background-color: #3198ff;
+            color: white;
+        }
+        
+        #submitButton {
+            font-weight: 700;
+        	font-size: 20px;
+        	width: 180px;
+        	height: 50px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            align-self: center;
         }
         
     </style>
@@ -247,7 +286,7 @@
                 
             }
             else{
-                document.getElementById("arrivalFlight").style.display = "none";
+                document.getElementById("returnFlight").style.display = "none";
             }
             
             makeURL();
@@ -364,13 +403,89 @@
                     newFlight += '</a></div>';
                     newFlight += '<div><a>from</a>';
                     newFlight += '<a id="price">$' + tempPrice + '</a></div>'
-                    newFlight += '<div><button id="selectFlightButton onClick="selectFlight()">Select Flight</button></div>';
+                    newFlight += '<div><button class="selectFlightButtonDep" onClick="selectDepartureFlight(' + randomTimes[i] +','+ newTime + ',' + tempPrice + ')">Select Flight</button></div>';
                     newFlight += '</div>';
                     newFlight += '</div>';
                     newFlight += '</div><br>';
                 }
                 
                 departureContainer.innerHTML = newFlight;
+                
+                $('.selectFlightButtonDep').click(function(){
+                    // Button
+                    $('.selectFlightButtonDep').removeClass('selectFlightButtonActive');
+                    $('.selectFlightButtonDep').parent().parent().removeClass('flightActive');
+                    $(this).addClass('selectFlightButtonActive');
+                    $(this).parent().parent().addClass('flightActive');
+                    
+                });
+                
+                // Return flight
+                if (currentSearch.tripType == "return"){
+                    var randFlightAmount = Math.floor(Math.random() * (depTimes.length - 2 + 1)) + 2;
+                
+                    var randomTimes = [];
+
+                    for (var i = 0; i < randFlightAmount; i++){
+                        var randomIndex = Math.floor(Math.random() * depTimes.length);
+
+                        while (randomTimes.includes(depTimes[randomIndex])){
+                            randomIndex = Math.floor(Math.random() * depTimes.length);
+                        }
+
+                        randomTimes[i] = depTimes[randomIndex];
+                    }
+                    randomTimes.filter(function (el) {return el != null;});
+                    randomTimes.sort(function(a, b){return a - b});
+
+                    var departureContainer = document.getElementById("departingContainer");
+
+                    var newFlight = "";
+                    for (var i = 0; i < randomTimes.length; i++){
+                        var tempPrice = 100 * (parseInt(flightTimeArray[0]) + (flightTimeArray[1] / 60));
+                        tempPrice = Math.floor(Math.random() * ((tempPrice * 1.4) - (tempPrice / 1.4)) + (tempPrice / 1.4));
+                        tempPrice = (Math.round(tempPrice * 100) / 100).toFixed(2);
+
+                        newFlight += '<div class="flight">';
+                        newFlight += '<div class="time">';
+
+                        // Departure Time
+                        var tempTimeHour = calcTime(randomTimes[i]);
+
+                        newFlight += '<span><a>' + tempTimeHour + '</a>';
+
+                        newFlight += '<br><a style="font-size:15px;"><b style="font-size:20px;">' + currentSearch.arrivalLocationCode + '</b> DEPARTURE</a></span></div>';
+                        newFlight += '<img src="images/planeside.png" style="filter:brightness(0%); height: 20px;"/>';
+
+                        newFlight += '<div class="time">';
+
+                        // Arrival Time
+                        var newTime = randomTimes[i] + parseInt(flightTimeArray[0]);
+                        newTime += flightTimeArray[1] / 60;
+                        var tempTimeHour = calcTime(newTime);
+
+                        newFlight += '<span><a>' + tempTimeHour + '</a>';
+
+                        newFlight += '<br><a style="font-size:15px;"><b style="font-size:20px;">' + currentSearch.departureLocationCode + '</b> ARRIVAL</a></span></div>';
+                        newFlight += '<div class="flightDuration">';
+                        newFlight += '<a>Direct Flight - ' + flightTimeText;
+                        newFlight += '</a></div>';
+                        newFlight += '<div><a>from</a>';
+                        newFlight += '<a id="price">$' + tempPrice + '</a></div>'
+                        newFlight += '<div><button class="selectFlightButtonArr" onClick="selectReturnFlight(' + randomTimes[i] +','+ newTime + ',' + tempPrice + ')">Select Flight</button></div>';
+                        newFlight += '</div>';
+                        newFlight += '</div>';
+                        newFlight += '</div><br>';
+                    }
+                    
+                    returnContainer.innerHTML = newFlight;
+                    
+                    $('.selectFlightButtonArr').click(function(){
+                        $('.selectFlightButtonArr').removeClass('selectFlightButtonActive');
+                        $(this).addClass('selectFlightButtonActive');
+                    });
+                }
+                
             }
         
         function calcTime(time){
@@ -382,11 +497,34 @@
                 tempTimeSuffix = "am";
             }
             var hour = Math.floor(Math.abs(time));
-            if (hour > 12){
+            if (hour > 12 && hour <= 24){
                 hour -= 12;
+            }
+            else if (hour > 24){
+                hour -= 24;
             }
             var min = Math.floor((Math.abs(time) * 60) % 60);
             return (hour < 10 ? "0" : "") + hour + ":" + (min < 10 ? "0" : "") + min + tempTimeSuffix;
+        }
+        
+        function selectDepartureFlight(dT, aT, price){
+            var flight = currentSearch;
+            flight.departureFlight = {};
+            flight.departureFlight.departureTime = calcTime(dT);
+            flight.departureFlight.arrivalTime = calcTime(aT);
+            flight.departureFlight.price = price;
+            console.log(flight);
+        }
+        
+        function selectReturnFlight(dT, aT, price){
+            var flight = currentSearch;
+            flight.returnFlight = {};
+            flight.returnFlight.departureTime = calcTime(dT);
+            flight.returnFlight.arrivalTime = calcTime(aT);
+            flight.returnFlight.price = price;
+            console.log(flight);
+            console.log(dT);
+            console.log(aT);
         }
     </script>
 </head>
@@ -398,22 +536,24 @@
     <div class="banner">
         <div class="flightInfoBar">
             <div class="activeBar">
+            </div>
+            <div class="infoBarTextActive">
                 <img src="images/planeside.png" height="25px"/>
                 <a>Flights</a>
             </div>
-            <div>
+            <div class="infoBarText">
                 <img src="images/briefcase.png" height="25px"/>
                 <a>Baggage</a>
             </div>
-            <div>
+            <div class="infoBarText">
                 <img src="images/seat.png" height="25px"/>
                 <a>Seats</a>
             </div>
-            <div>
+            <div class="infoBarText">
                 <img src="images/user.png" height="25px"/>
                 <a>Booking Details</a>
             </div>
-            <div>
+            <div class="infoBarText">
                 <img src="images/dollar.png" height="25px"/>
                 <a>Review & Pay</a>
             </div>
@@ -453,17 +593,17 @@
                         <a id="price">$100</a>
                     </div>
                     <div>
-                        <button id="selectFlightButton" onClick="selectFlight()">Select Flight</button>
+                        <button id="selectFlightButton" onClick="selectDepartureFlight()">Select Flight</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="break_60"></div>
-        <div class="arrivalFlight" id="arrivalFlight">
+        <div class="returnFlight" id="returnFlight">
             <h2>Returning Flight</h2>
             <h3 id="arrToDep">Arrival to Departure</h3>
             <h4 id="arrDate">Day Date Month Year</h4>
-            <div id="arrivingContainer">
+            <div id="returnContainer">
                 <div class="flight">
                     <div class="time">
                         <span>
@@ -488,10 +628,11 @@
                         <a id="price">$100</a>
                     </div>
                     <div>
-                        <button id="selectFlightButton" onClick="selectFlight()">Select Flight</button>
+                        <button id="selectFlightButton" onClick="selectReturnFlight()">Select Flight</button>
                     </div>
                 </div>
             </div>
         </div>
+        <button id="submitButton" onClick="submitFlightSelection">Continue</button>
     </div>
 </body>
