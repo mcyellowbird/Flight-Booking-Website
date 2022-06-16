@@ -108,6 +108,7 @@
             border-radius: 50px;
             position: absolute;
             background: linear-gradient(129deg, rgba(43,25,242,1) 0%, rgba(59,156,255,1) 100%);
+            box-shadow: 0 0 5px rgba(43,25,242,1);
         }
         
         .infoBarText {
@@ -193,6 +194,10 @@
         	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         
+        .baggageSelector div:active{
+        	box-shadow: 0 0 10px rgba(49, 152, 255, 0.75);
+        }
+        
         .baggageSelector div img {
             margin-left: auto;
             margin-right: auto;
@@ -226,6 +231,7 @@
             width: 18px;
         }
         
+        
         #submitButton {
             font-weight: 700;
         	font-size: 20px;
@@ -257,8 +263,11 @@
                 depDate.innerHTML = tempDateString;
                 
                 var depToArr = document.getElementById("depToArr");
-                depToArr.innerHTML = "<b>" + currentSearch.departureLocation + " to " + currentSearch.arrivalLocation + "</b>";
-
+                depToArr.innerHTML = "<b>" + currentSearch.departureLocation + " to " + currentSearch.arrivalLocation + "</b>";      
+                var arrToDep = document.getElementById("arrToDep");
+                depToArr.innerHTML = "<b>" + currentSearch.arrivalLocation + " to " + currentSearch.departureLocation + "</b>";                 
+                
+                // If return flight
                 if (currentSearch.returnDate != null){
                     var arrDate = document.getElementById("arrDate");
                     tempDate = new Date(currentSearch.returnDate);
@@ -271,7 +280,49 @@
                 else{
                     document.getElementById("returnFlight").style.display = "none";
                 }
+                
+                $('.bSDepart > div').click(function(){
+                    $('.bSDepart > div').css("box-shadow", "0 0 5px rgba(0, 0, 0, 0.2)");
+                    $('.bSDepart > div').css("outline", "none");
+                    $(this).css('box-shadow', "0 0 10px rgba(49, 152, 255, 1)");
+                    $(this).css('outline', "2px solid rgba(49, 152, 255, 1)");
+                });
+                $('.bSReturn > div').click(function(){
+                    $('.bSReturn > div').css("box-shadow", "0 0 5px rgba(0, 0, 0, 0.2)");
+                    $('.bSReturn > div').css("outline", "none");
+                    $(this).css('box-shadow', "0 0 10px rgba(49, 152, 255, 1)");
+                    $(this).css('outline', "2px solid rgba(49, 152, 255, 1)");
+                });
             }
+        }
+        
+        function selectBaggageDep(weight, price){
+            console.log("Weight: " + weight + "kg\nPrice: $" + price);
+            
+            currentSearch.departureFlight.baggageWeight = weight;
+            currentSearch.departureFlight.baggagePrice = price;
+            console.log(currentSearch);
+        }
+        
+        function selectBaggageRet(weight, price){
+            console.log("Weight: " + weight + "kg\nPrice: $" + price);
+            
+            currentSearch.returnFlight.baggageWeight = weight;
+            currentSearch.returnFlight.baggagePrice = price;
+            console.log(currentSearch);
+        }
+        
+        function submitFlightSelection(){
+            if (currentSearch.returnFlight != null){
+                currentSearch.totalPrice += (currentSearch.departureFlight.baggagePrice + currentSearch.returnFlight.baggagePrice);
+            }
+            else{
+                currentSearch.totalPrice += currentSearch.departureFlight.baggagePrice;
+            }
+            
+            sessionStorage.setItem('searchFlight', JSON.stringify(currentSearch));
+            console.log(currentSearch);
+            console.log("continue");
         }
     </script>
 </head>
@@ -314,11 +365,11 @@
             <h2>Departing Flight</h2>
             <h3 id="depToArr">Departure to Arrival</h3>
             <h4 id="depDate">Day Date Month Year</h4>
-            <br><br>
+            <br>
             <h2>Checked Baggage</h2>
             <a>Checked baggage must be checked in before you go to the gate, and will not be carried onto the aircraft.</a>
             <br>
-            <div class="baggageSelector">
+            <div class="baggageSelector bSDepart">
                 <div onClick="selectBaggageDep(0,0)">
                     <img src="images/baggageSelector_None.png" width="40px"/>
                     <br>
@@ -366,11 +417,53 @@
         
         <div class="returnFlight" id="returnFlight">
             <h2>Returning Flight</h2>
-            <h4 id="arrToDep"><b>Departure to Arrival</b></h4>
-            <a id="arrDate">— Day Date Month Year</a>
-            
-            <div class="baggageSelector">
-                
+            <h3 id="arrToDep">Arrival to Departure</h3>
+            <h4 id="arrDate">Day Date Month Year</h4>
+            <br>
+            <h2>Checked Baggage</h2>
+            <a>Checked baggage must be checked in before you go to the gate, and will not be carried onto the aircraft.</a>
+            <br>
+            <div class="baggageSelector bSReturn">
+                <div onClick="selectBaggageRet(0,0)">
+                    <img src="images/baggageSelector_None.png" width="40px"/>
+                    <br>
+                    <a>0 kg</a>
+                    <a></a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageRet(15,25)">
+                    <img src="images/baggageSelector_Small.png" width="40px"/>
+                    <br>
+                    <a>15 kg</a>
+                    <a>$25 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageRet(20,27)">
+                    <img src="images/baggageSelector_Medium.png" width="40px"/>
+                    <br>
+                    <a>20 kg</a>
+                    <a>$27 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageRet(30,41)">
+                    <img src="images/baggageSelector_Large.png" width="40px"/>
+                    <br>
+                    <a>30 kg</a>
+                    <a>$41 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageRet(40,54)">
+                    <img src="images/baggageSelector_ExtraLarge.png" width="40px"/>
+                    <br>
+                    <a>40 kg</a>
+                    <a>$54 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
             </div>
         </div>
         <button id="submitButton" onClick="submitFlightSelection()">Continue</button>

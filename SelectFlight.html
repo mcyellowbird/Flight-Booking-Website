@@ -108,7 +108,8 @@
         
         .activeBar {
             position: absolute;
-            background: linear-gradient(129deg, rgba(43,25,242,1) 0%, rgba(59,156,255,1) 100%);
+            background: linear-gradient(to right, rgba(43,25,242,1) 0%, rgba(59,156,255,1) 100%);
+            box-shadow: 0 0 5px rgba(43,25,242,1);
         }
         
         .infoBarText {
@@ -511,24 +512,28 @@
         }
         
         function selectDepartureFlight(dT, aT, price){
-            var flight = currentSearch;
-            flight.departureFlight = {};
-            flight.departureFlight.departureTime = calcTime(dT);
-            flight.departureFlight.arrivalTime = calcTime(aT);
-            flight.departureFlight.price = price;
-            sessionStorage.setItem('searchFlight', JSON.stringify(flight));
+            currentSearch.departureFlight = {};
+            currentSearch.departureFlight.departureTime = calcTime(dT);
+            currentSearch.departureFlight.arrivalTime = calcTime(aT);
+            currentSearch.departureFlight.price = price;
         }
         
         function selectReturnFlight(dT, aT, price){
-            var flight = currentSearch;
-            flight.returnFlight = {};
-            flight.returnFlight.departureTime = calcTime(dT);
-            flight.returnFlight.arrivalTime = calcTime(aT);
-            flight.returnFlight.price = price;
-            sessionStorage.setItem('searchFlight', JSON.stringify(flight));
+            currentSearch.returnFlight = {};
+            currentSearch.returnFlight.departureTime = calcTime(dT);
+            currentSearch.returnFlight.arrivalTime = calcTime(aT);
+            currentSearch.returnFlight.price = price;
         }
         
         function submitFlightSelection(){
+            if (currentSearch.returnFlight != null){
+                currentSearch.totalPrice = (currentSearch.departureFlight.price + currentSearch.returnFlight.price);
+            }
+            else{
+                currentSearch.totalPrice = currentSearch.departureFlight.price;
+            }
+            
+            sessionStorage.setItem('searchFlight', JSON.stringify(currentSearch));
             window.location = "SelectBaggage.html";
         }
     </script>
