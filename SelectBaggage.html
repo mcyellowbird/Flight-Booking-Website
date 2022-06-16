@@ -27,10 +27,6 @@
         	border-bottom: 1px solid #3b9cff;
         }
 
-        a {
-        	padding-left: 6%;
-        }
-
         button {
         	color: #3b9cff;
             font-weight: 700;
@@ -95,7 +91,7 @@
             width: 1200px;
         }
         
-        .flightInfoBar div {
+        .flightInfoBar div:not(:first-child) {
         	display: flex;
         	justify-content: center;
         	flex-flow: row;
@@ -107,6 +103,9 @@
         }
         
         .activeBar {
+            width: 460px;
+            height: 100%;
+            border-radius: 50px;
             position: absolute;
             background: linear-gradient(129deg, rgba(43,25,242,1) 0%, rgba(59,156,255,1) 100%);
         }
@@ -115,10 +114,18 @@
             font-weight: 700;
         }
         
+        .infoBarText a {
+            padding-left: 6%;
+        }
+        
         .infoBarTextActive {
             font-weight: 700;
             color: white;
             filter: brightness(0) invert(1);
+        }
+        
+        .infoBarTextActive a {
+            padding-left: 6%;
         }
         
         .infoBarTextActive img {
@@ -135,6 +142,88 @@
         	display: flex;
         	justify-content: center;
         	flex-flow: column;
+        }
+        
+        .departingFlight {
+            width: 1200px;
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: column;
+            align-self: center;
+        }
+        
+        .returnFlight {
+            width: 1200px;
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: column;
+            align-self: center;
+        }
+        
+        .baggageSelector {
+            width: 100%;
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: row;
+            align-self: center;
+        }
+        
+        .baggageSelector div{
+            width: 220px;
+            height: 240px;
+            background-color: white;
+            border-radius: 5px;
+        	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: box-shadow .2s;
+            cursor: pointer;
+            
+        	display: flex;
+        	justify-content: flex-end;
+        	flex-flow: column;
+            align-self: center;
+            
+            text-align: center;
+        }
+        
+        .baggageSelector div:not(:first-child) {
+            margin-left: 25px;
+        }
+        
+        .baggageSelector div:hover{
+        	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .baggageSelector div img {
+            margin-left: auto;
+            margin-right: auto;
+            width: 30px;
+            opacity: 0.6;
+        }
+        
+        .baggageSelector div a {
+            line-height: 40px;
+            height: 40px;
+            font-weight: 700;
+        }
+        
+        .baggageSelector div a:first-of-type {
+            color: black;
+            font-size: 30px;
+        }
+        
+        .baggageSelector div a {
+            font-size: 20px;
+            color: #3198ff;
+        }
+        
+        .baggageSelector div img:last-child {
+            opacity: 0.3;
+            width: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .baggageSelector div:nth-child(3) img:first-child {
+            width: 18px;
         }
         
         #submitButton {
@@ -158,6 +247,31 @@
             if (currentSearch == null){
                 window.location = "index.html";
             }
+            else{
+                var depDate = document.getElementById("depDate");
+                var tempDate = new Date(currentSearch.departureDate);
+                var tempDateString = tempDate.toLocaleDateString('default', {weekday: 'long'});
+                tempDateString += " " + tempDate.toLocaleDateString('default', {day: 'numeric'});
+                tempDateString += " " + tempDate.toLocaleDateString('default', {month: 'long'});
+                tempDateString += " " + tempDate.toLocaleDateString('default', {year: 'numeric'});
+                depDate.innerHTML = tempDateString;
+                
+                var depToArr = document.getElementById("depToArr");
+                depToArr.innerHTML = "<b>" + currentSearch.departureLocation + " to " + currentSearch.arrivalLocation + "</b>";
+
+                if (currentSearch.returnDate != null){
+                    var arrDate = document.getElementById("arrDate");
+                    tempDate = new Date(currentSearch.returnDate);
+                    tempDateString = tempDate.toLocaleDateString('default', {weekday: 'long'});
+                    tempDateString += " " + tempDate.toLocaleDateString('default', {day: 'numeric'});
+                    tempDateString += " " + tempDate.toLocaleDateString('default', {month: 'long'});
+                    tempDateString += " " + tempDate.toLocaleDateString('default', {year: 'numeric'});
+                    arrDate.innerHTML = tempDateString;
+                }
+                else{
+                    document.getElementById("returnFlight").style.display = "none";
+                }
+            }
         }
     </script>
 </head>
@@ -174,7 +288,7 @@
                 <img src="images/planeside.png" height="25px"/>
                 <a>Flights</a>
             </div>
-            <div class="infoBarText">
+            <div class="infoBarTextActive">
                 <img src="images/briefcase.png" height="25px"/>
                 <a>Baggage</a>
             </div>
@@ -196,6 +310,69 @@
     
     <div class="content">
         <div class="break_60"></div>
+        <div class="departingFlight">
+            <h2>Departing Flight</h2>
+            <h3 id="depToArr">Departure to Arrival</h3>
+            <h4 id="depDate">Day Date Month Year</h4>
+            <br><br>
+            <h2>Checked Baggage</h2>
+            <a>Checked baggage must be checked in before you go to the gate, and will not be carried onto the aircraft.</a>
+            <br>
+            <div class="baggageSelector">
+                <div onClick="selectBaggageDep(0,0)">
+                    <img src="images/baggageSelector_None.png" width="40px"/>
+                    <br>
+                    <a>0 kg</a>
+                    <a></a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageDep(15,25)">
+                    <img src="images/baggageSelector_Small.png" width="40px"/>
+                    <br>
+                    <a>15 kg</a>
+                    <a>$25 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageDep(20,27)">
+                    <img src="images/baggageSelector_Medium.png" width="40px"/>
+                    <br>
+                    <a>20 kg</a>
+                    <a>$27 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageDep(30,41)">
+                    <img src="images/baggageSelector_Large.png" width="40px"/>
+                    <br>
+                    <a>30 kg</a>
+                    <a>$41 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageDep(40,54)">
+                    <img src="images/baggageSelector_ExtraLarge.png" width="40px"/>
+                    <br>
+                    <a>40 kg</a>
+                    <a>$54 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+            </div>
+        </div>
         
+        <div class="break_60"></div>
+        
+        <div class="returnFlight" id="returnFlight">
+            <h2>Returning Flight</h2>
+            <h4 id="arrToDep"><b>Departure to Arrival</b></h4>
+            <a id="arrDate">— Day Date Month Year</a>
+            
+            <div class="baggageSelector">
+                
+            </div>
+        </div>
+        <button id="submitButton" onClick="submitFlightSelection()">Continue</button>
     </div>
 </body>
