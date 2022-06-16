@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<head>
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <title>Flight Booking Website</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
+
+        * {
+        	font-family: Oxygen;
+        	user-select: none;
+        }
+
+        body {
+        	background-color: rgb(238, 245, 255);
+        }
+
+        input {
+        	width: 300px;
+        	height: 40px;
+        	font-size: 14px;
+        	border: none;
+        	border-bottom: 1px solid lightgrey;
+        	outline: none;
+        }
+
+        input:focus {
+        	border-bottom: 1px solid #3b9cff;
+        }
+
+        a {
+        	padding-left: 6%;
+        }
+
+        button {
+        	color: #3b9cff;
+            font-weight: 700;
+        	width: 150px;
+        	height: 40px;
+        	border: 2px solid #3b9cff;
+        	border-radius: 20px;
+        	font-size: 16px;
+        	background-color: transparent;
+            transition: background-color .2s, color .2s;
+        }
+
+        button:hover {
+        	outline: none;
+        	cursor: pointer;
+        	background-color: #5eaeff;
+        	color: white;
+
+        }
+
+        button:active {
+        	outline: none;
+        	background-color: #3198ff;
+        }
+        
+        .break_60 {
+            width: 100%;
+            height: 60px;
+        }
+        
+        .banner {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(129deg, rgba(43,25,242,1) 37%, rgba(59,156,255,1) 49%, rgba(12,17,255,1) 100%);
+            
+        	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: row;
+        	align-items: center;
+        }
+        
+        .break_60 input {
+            width: 40px;
+            border: none;
+        }
+                
+        .flightInfoBar {
+            position: absolute;
+        	display: flex;
+        	justify-content: space-between;
+        	flex-flow: row;
+        	align-items: center;
+            
+        	background-color: rgb(238, 245, 255);
+            
+        	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            
+            border-radius: 50px;
+            height: 60px;
+            width: 1200px;
+        }
+        
+        .flightInfoBar div {
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: row;
+        	align-items: center;
+            
+            width: 200px;
+            height: 100%;
+            border-radius: 50px;
+        }
+        
+        .activeBar {
+            position: absolute;
+            background: linear-gradient(129deg, rgba(43,25,242,1) 0%, rgba(59,156,255,1) 100%);
+        }
+        
+        .infoBarText {
+            font-weight: 700;
+        }
+        
+        .infoBarTextActive {
+            font-weight: 700;
+            color: white;
+            filter: brightness(0) invert(1);
+        }
+        
+        .infoBarTextActive img {
+            filter: brightness(0) invert(1);
+        }
+        
+        .title {
+            padding-top: 20px;
+            text-align: center;
+            font-size: 40px;
+        }
+        
+        .content {
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: column;
+        }
+        
+        #submitButton {
+            font-weight: 700;
+        	font-size: 20px;
+        	width: 180px;
+        	height: 50px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            align-self: center;
+        }
+        
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        
+        var activeUser = JSON.parse(localStorage.getItem('currentUser'));
+        var currentSearch = JSON.parse(sessionStorage.getItem('searchFlight'));
+        
+        function setup(){
+            if (currentSearch == null){
+                window.location = "index.html";
+            }
+        }
+    </script>
+</head>
+
+<body onload="setup()">
+    <div class="break_60">
+        <input type="image" src="images/favicon.png" onClick='window.location = "index.html";'/>
+    </div>
+    <div class="banner">
+        <div class="flightInfoBar">
+            <div class="activeBar">
+            </div>
+            <div class="infoBarTextActive">
+                <img src="images/planeside.png" height="25px"/>
+                <a>Flights</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/briefcase.png" height="25px"/>
+                <a>Baggage</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/seat.png" height="25px"/>
+                <a>Seats</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/user.png" height="25px"/>
+                <a>Booking Details</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/dollar.png" height="25px"/>
+                <a>Review & Pay</a>
+            </div>
+        </div>
+    </div>
+    <h3 class="title" id="title">Baggage</h3>
+    
+    <div class="content">
+        <div class="break_60"></div>
+        
+    </div>
+</body>

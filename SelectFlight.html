@@ -481,11 +481,14 @@
                     returnContainer.innerHTML = newFlight;
                     
                     $('.selectFlightButtonArr').click(function(){
+                        // Button
                         $('.selectFlightButtonArr').removeClass('selectFlightButtonActive');
+                        $('.selectFlightButtonArr').parent().parent().removeClass('flightActive');
                         $(this).addClass('selectFlightButtonActive');
+                        $(this).parent().parent().addClass('flightActive');
+
                     });
                 }
-                
             }
         
         function calcTime(time){
@@ -513,7 +516,7 @@
             flight.departureFlight.departureTime = calcTime(dT);
             flight.departureFlight.arrivalTime = calcTime(aT);
             flight.departureFlight.price = price;
-            console.log(flight);
+            sessionStorage.setItem('searchFlight', JSON.stringify(flight));
         }
         
         function selectReturnFlight(dT, aT, price){
@@ -522,9 +525,11 @@
             flight.returnFlight.departureTime = calcTime(dT);
             flight.returnFlight.arrivalTime = calcTime(aT);
             flight.returnFlight.price = price;
-            console.log(flight);
-            console.log(dT);
-            console.log(aT);
+            sessionStorage.setItem('searchFlight', JSON.stringify(flight));
+        }
+        
+        function submitFlightSelection(){
+            window.location = "SelectBaggage.html";
         }
     </script>
 </head>
@@ -633,6 +638,6 @@
                 </div>
             </div>
         </div>
-        <button id="submitButton" onClick="submitFlightSelection">Continue</button>
+        <button id="submitButton" onClick="submitFlightSelection()">Continue</button>
     </div>
 </body>
