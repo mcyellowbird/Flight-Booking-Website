@@ -165,7 +165,7 @@
         	flex-direction: row;
             justify-content: flex-start;
         	align-items: center;
-            transition: box-shadow .2s;
+            transition: box-shadow .2s, outline .2s;
         }
         
         .flight:hover {
@@ -173,11 +173,13 @@
         }
         
         .flightActive {
-        	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        	box-shadow: 0 0 10px rgba(49, 152, 255, 1);
+            outline: 2px solid rgba(49, 152, 255, 1);
         }
         
         .flightActive:hover {
-        	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        	box-shadow: 0 0 10px rgba(49, 152, 255, 1);
+            outline: 2px solid rgba(49, 152, 255, 1);
         }
         
         .flight a {
@@ -253,10 +255,15 @@
         
         var activeUser = JSON.parse(localStorage.getItem('currentUser'));
         var currentSearch = JSON.parse(sessionStorage.getItem('searchFlight'));
+        var flightList = JSON.parse(localStorage.getItem('flightList'));
         
         function setup(){
             if (currentSearch == null){
                 window.location = "index.html";
+            }
+            
+            if (flightList == null){
+                flightList = [];
             }
             
             var title = document.getElementById("title");
@@ -352,6 +359,8 @@
             }
         
             function generateFlights(){
+                var flightIndex;
+                
                 var depTimes = [6, 7.5, 9, 10.5, 12, 13.5, 15, 16.5, 18, 19.5, 21, 23];
                 
                 var randFlightAmount = Math.floor(Math.random() * (depTimes.length - 2 + 1)) + 2;
@@ -441,6 +450,8 @@
 
                     var departureContainer = document.getElementById("departingContainer");
 
+                    departureContainer += '<div class="break_60"></div>';
+                    
                     var newFlight = "";
                     for (var i = 0; i < randomTimes.length; i++){
                         var tempPrice = 100 * (parseInt(flightTimeArray[0]) + (flightTimeArray[1] / 60));
@@ -526,15 +537,24 @@
         }
         
         function submitFlightSelection(){
-            if (currentSearch.returnFlight != null){
-                currentSearch.totalPrice = (currentSearch.departureFlight.price + currentSearch.returnFlight.price);
+            console.log(currentSearch);
+            if (currentSearch.departureFlight == null){
+                alert("Error\n\nYou have not selected a departing flight.");
+            }
+            else if (currentSearch.returnFlight == null & currentSearch.tripType == "return"){
+                alert("Error\n\nYou have not selected a return flight.");
             }
             else{
-                currentSearch.totalPrice = currentSearch.departureFlight.price;
+                if (currentSearch.returnFlight != null){
+                    currentSearch.totalPrice = (currentSearch.departureFlight.price + currentSearch.returnFlight.price);
+                }
+                else{
+                    currentSearch.totalPrice = currentSearch.departureFlight.price;
+                }
+
+                sessionStorage.setItem('searchFlight', JSON.stringify(currentSearch));
+                window.location = "SelectBaggage.html";
             }
-            
-            sessionStorage.setItem('searchFlight', JSON.stringify(currentSearch));
-            window.location = "SelectBaggage.html";
         }
     </script>
 </head>
@@ -608,7 +628,6 @@
                 </div>
             </div>
         </div>
-        <div class="break_60"></div>
         <div class="returnFlight" id="returnFlight">
             <h2>Returning Flight</h2>
             <h3 id="arrToDep">Arrival to Departure</h3>
