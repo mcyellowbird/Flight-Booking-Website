@@ -1,0 +1,23 @@
+
+<Files ~ "^\.(htaccess|htpasswd)$">
+deny from all
+</Files>
+Options -Indexes
+AuthUserFile private/htpasswd
+AuthGroupFile /dev/null
+AuthName "Please enter your ID and password"
+AuthType Basic
+require valid-user 
+ErrorDocument 404 error404.html
+DirectoryIndex index.html       
+order deny,allow
+
+# Cors
+Header add Access-Control-Allow-Origin "*"
+Header add Access-Control-Allow-Methods "GET,PUT,POST,DELETE"
+Header add Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# Remove .html
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Page not found error
