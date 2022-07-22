@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <meta charset="utf-8">
     <title>Flight Booking Website</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
@@ -122,15 +123,25 @@
         .infoBarTextActive {
             font-weight: 700;
             color: white;
-            filter: brightness(0) invert(1);
+            background: linear-gradient(129deg, rgba(43,25,242,1) 0%, rgba(59,156,255,1) 100%);
         }
         
         .infoBarTextActive a {
             padding-left: 6%;
+            filter: brightness(0) invert(1);
         }
         
         .infoBarTextActive img {
             filter: brightness(0) invert(1);
+        }
+        
+        #activeInfoBar {
+            transition: text-shadow .2s;
+        }
+        
+        #activeInfoBar:hover {
+            text-shadow: 0px 0px 5px white;
+            cursor: pointer;
         }
         
         .title {
@@ -245,12 +256,43 @@
             align-self: center;
         }
         
+                
+        .totalCostBar {
+            position: sticky;
+            z-index: auto;
+            font-weight: 400;
+            
+            height: 350px;
+            width: 200px;
+            padding-top: 10px;
+            text-align: center;
+            background: white;
+            float: right;
+            right: 50px;
+            top: 50px;
+            bottom: auto;
+            border-radius: 15px;            
+        	box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .totalCostContent {
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: column;
+            align-self: center;
+        }
+        
+        .totalCostContent a:last-child {
+            margin-top:%;
+        }
+        
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         
         var activeUser = JSON.parse(localStorage.getItem('currentUser'));
         var currentSearch = JSON.parse(sessionStorage.getItem('searchFlight'));
+        var totalCost;
         
         function setup(){
             if (currentSearch == null){
@@ -298,6 +340,10 @@
                     $(this).css('outline', "2px solid rgba(49, 152, 255, 1)");
                 });
             }
+            document.getElementById('totalPassengersDepart').innerHTML = currentSearch.passengerCount + " Passengers";
+            document.getElementById('totalPassengersReturn').innerHTML = currentSearch.passengerCount + " Passengers";
+            document.getElementById('totalPriceDisplayDepart').innerHTML = "$" + (currentSearch.departureFlight.price * currentSearch.passengerCount);
+            document.getElementById('totalPriceDisplayReturn').innerHTML = "$" + (currentSearch.returnFlight.price * currentSearch.passengerCount);
         }
         
         function selectBaggageDep(weight, price){
@@ -305,6 +351,9 @@
             
             currentSearch.departureFlight.baggageWeight = weight;
             currentSearch.departureFlight.baggagePrice = price;
+            document.getElementById('totalBaggageWeightDepart').innerHTML = "Baggage Weight: " + weight + "kg";
+            document.getElementById('totalBaggageCostDepart').innerHTML = "$" + (price * currentSearch.passengerCount);
+            //document.getElementById('totalFlightCost').innerHTML = (price * currentSearch.passengerCount);
             console.log(currentSearch);
         }
         
@@ -313,20 +362,22 @@
             
             currentSearch.returnFlight.baggageWeight = weight;
             currentSearch.returnFlight.baggagePrice = price;
+            document.getElementById('totalBaggageWeightReturn').innerHTML = "Baggage Weight: " + weight + "kg";
+            document.getElementById('totalBaggageCostReturn').innerHTML = "$" + (price * currentSearch.passengerCount);
             console.log(currentSearch);
         }
         
         function submitFlightSelection(){
             if (currentSearch.returnFlight != null){
-                currentSearch.totalPrice += (currentSearch.departureFlight.baggagePrice + currentSearch.returnFlight.baggagePrice);
+                currentSearch.totalPrice += ((currentSearch.departureFlight.baggagePrice * currentSearch.passengerCount) + (currentSearch.returnFlight.baggagePrice * currentSearch.passengerCount));
             }
             else{
-                currentSearch.totalPrice += currentSearch.departureFlight.baggagePrice;
+                currentSearch.totalPrice += (currentSearch.departureFlight.baggagePrice * currentSearch.passengerCount);
             }
             
             sessionStorage.setItem('searchFlight', JSON.stringify(currentSearch));
             console.log(currentSearch);
-            console.log("continue");
+            window.location = "SelectSeat.html";
         }
     </script>
 </head>
@@ -339,7 +390,7 @@
         <div class="flightInfoBar">
             <div class="activeBar">
             </div>
-            <div class="infoBarTextActive" id="selectFlightInfoBar" onclick="console.log(window.location = 'SelectFlight.html');">
+            <div id="activeInfoBar" class="infoBarTextActive" id="selectFlightInfoBar" onclick="console.log(window.location = 'SelectFlight.html');">
                 <img src="images/planeside.png" height="25px"/>
                 <a>Flights</a>
             </div>
@@ -362,6 +413,30 @@
         </div>
     </div>
     <h3 class="title" id="title">Baggage</h3>
+        
+    <div class="totalCostBar">
+        <span style="font-size: 18px;">Departure Total</span>
+        <br><br>
+        <div class="totalCostContent" style="margin-bottom: 8%; text-align: left; padding-left: 10px;">
+            <a id="totalPassengersDepart"># Passengers</a>
+            <a id="totalBaggageWeightDepart">Baggage Weight: 0kg</a>
+            <span>Baggage Cost: <a id="totalBaggageCostDepart" style="color: #3198ff; font-weight: bold;">$0</a></span>
+            <span>Flight: <a id="totalPriceDisplayDepart" style="color: #3198ff; font-weight: bold;">$0</a></span>
+        </div>
+        <hr>
+        <span style="font-size: 18px;">Return Total</span>
+        <br><br>
+        <div class="totalCostContent" style="text-align: left; padding-left: 10px;">
+            <a id="totalPassengersReturn"># Passengers</a>
+            <a id="totalBaggageWeightReturn">Baggage Weight: 0kg</a>
+            <span>Baggage Cost: <a id="totalBaggageCostReturn" style="color: #3198ff; font-weight: bold;">$0</a></span>
+            <span>Flight: <a id="totalPriceDisplayReturn" style="color: #3198ff; font-weight: bold;">$0</a></span>
+        </div>
+        <hr>
+        <div style="margin-top: 35px;">
+            <span>Total Flight Cost: $<a id="totalFlightCost" style="color: #3198ff; font-weight: bold;">0</a></span>
+        </div>
+    </div>
     
     <div class="content" id="container">
         <div class="break_60"></div>
@@ -470,4 +545,11 @@
         </div>
         <button id="submitButton" onClick="submitFlightSelection()">Continue</button>
     </div>
+    <div class="break_60"></div>
+<!--
+    <div class="totalCostBar">
+        <div></div>
+    </div>
+-->
+    <div class="break_60"></div>
 </body>

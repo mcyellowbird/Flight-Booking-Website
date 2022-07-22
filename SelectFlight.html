@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <meta charset="utf-8">
     <title>Flight Booking Website</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
@@ -249,6 +250,35 @@
             align-self: center;
         }
         
+        .totalCostBar {
+            position: sticky;
+            z-index: auto;
+            font-weight: 400;
+            
+            height: 300px;
+            width: 180px;
+            padding-top: 20px;
+            text-align: center;
+            background: white;
+            float: right;
+            right: 50px;
+            top: 50px;
+            bottom: auto;
+            border-radius: 15px;            
+        	box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .totalCostContent {
+        	display: flex;
+        	justify-content: center;
+        	flex-flow: column;
+            align-self: center;
+        }
+        
+        .totalCostContent a:last-child {
+            margin-top:%;
+        }
+        
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -307,7 +337,7 @@
             var depLoc = currentSearch.departureLocationCode;
             var arrLoc = currentSearch.arrivalLocationCode;
             
-            var urlQuery = "https://cors-anywhere.herokuapp.com/https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc;
+            var urlQuery = "https://www.travelmath.com/flying-time/from/" + depLoc + "/to/" + arrLoc;
             
             makeAjaxQuery(urlQuery);
         }
@@ -501,6 +531,8 @@
 
                     });
                 }
+                document.getElementById('totalPassengersDepart').innerHTML = currentSearch.passengerCount + " Passengers";
+                document.getElementById('totalPassengersReturn').innerHTML = currentSearch.passengerCount + " Passengers";
             }
         
         function calcTime(time){
@@ -527,6 +559,8 @@
             currentSearch.departureFlight.departureTime = calcTime(dT);
             currentSearch.departureFlight.arrivalTime = calcTime(aT);
             currentSearch.departureFlight.price = price;
+            
+            document.getElementById('totalPriceDisplayDepart').innerHTML = "$" + (price * currentSearch.passengerCount);
         }
         
         function selectReturnFlight(dT, aT, price){
@@ -534,10 +568,11 @@
             currentSearch.returnFlight.departureTime = calcTime(dT);
             currentSearch.returnFlight.arrivalTime = calcTime(aT);
             currentSearch.returnFlight.price = price;
+            
+            document.getElementById('totalPriceDisplayReturn').innerHTML = "$" + (price * currentSearch.passengerCount);
         }
         
         function submitFlightSelection(){
-            console.log(currentSearch);
             if (currentSearch.departureFlight == null){
                 alert("Error\n\nYou have not selected a departing flight.");
             }
@@ -546,10 +581,10 @@
             }
             else{
                 if (currentSearch.returnFlight != null){
-                    currentSearch.totalPrice = (currentSearch.departureFlight.price + currentSearch.returnFlight.price);
+                    currentSearch.totalPrice = ((currentSearch.departureFlight.price * currentSearch.passengerCount) + (currentSearch.returnFlight.price * currentSearch.passengerCount));
                 }
                 else{
-                    currentSearch.totalPrice = currentSearch.departureFlight.price;
+                    currentSearch.totalPrice = (currentSearch.departureFlight.price * currentSearch.passengerCount);
                 }
 
                 sessionStorage.setItem('searchFlight', JSON.stringify(currentSearch));
@@ -591,6 +626,22 @@
     </div>
     <h3 class="title" id="title">Departure to Arrival</h3>
     <h2><?php echo date('Y/m/d')?></h2>
+    
+    <div class="totalCostBar">
+        <span style="font-size: 18px;">Departure Total</span>
+        <hr>
+        <div class="totalCostContent" style="margin-bottom: 30%;">
+            <a id="totalPassengersDepart"># Passengers</a>
+            <a id="totalPriceDisplayDepart" style="color: #3198ff; font-weight: bold;">$0</a>
+        </div>
+        <br>
+        <span style="font-size: 18px;">Return Total</span>
+        <hr>
+        <div class="totalCostContent">
+            <a id="totalPassengersReturn"># Passengers</a>
+            <a id="totalPriceDisplayReturn" style="color: #3198ff; font-weight: bold;">$0</a>
+        </div>
+    </div>
     
     <div class="content">
         <div class="break_60"></div>
@@ -664,4 +715,5 @@
         </div>
         <button id="submitButton" onClick="submitFlightSelection()">Continue</button>
     </div>
+    <div class="break_60"></div>
 </body>
