@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <meta charset="utf-8">
+    <title>Flight Booking Website</title>
+    <link rel="stylesheet" type="text/css" href="css/selectFlight.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts/selectFlight.js"></script>
+</head>
+
+<body onload="setup()">
+    <div class="break_60">
+        <input type="image" src="images/favicon.png" onClick='window.location = "index.html";' />
+    </div>
+    <div class="banner">
+        <div class="flightInfoBar">
+            <div class="activeBar">
+            </div>
+            <div class="infoBarTextActive">
+                <img src="images/planeside.png" height="25px" />
+                <a>Flights</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/briefcase.png" height="25px" />
+                <a>Baggage</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/seat.png" height="25px" />
+                <a>Seats</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/user.png" height="25px" />
+                <a>Booking Details</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/dollar.png" height="25px" />
+                <a>Review & Pay</a>
+            </div>
+        </div>
+    </div>
+    <h3 class="title" id="title">Departure to Arrival</h3>
+    <h2>
+        <?php echo date('Y/m/d')?>
+    </h2>
+
+    <div class="totalCostBar">
+        <span style="font-size: 18px;">Departure Total</span>
+        <hr>
+        <div class="totalCostContent" style="margin-bottom: 30%;">
+            <a id="totalPassengersDepart"># Passengers</a>
+            <a id="totalPriceDisplayDepart" style="color: #3198ff; font-weight: bold;">$0</a>
+        </div>
+        <br>
+        <span style="font-size: 18px;">Return Total</span>
+        <hr>
+        <div class="totalCostContent">
+            <a id="totalPassengersReturn"># Passengers</a>
+            <a id="totalPriceDisplayReturn" style="color: #3198ff; font-weight: bold;">$0</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="loadingSpinner" class="spinner" style="display: none;"></div>
+        <div id="errorMessage" style="display: none;"></div>
+        <div class="flightListing" id="departList">
+            <h2>Departing Flight</h2>
+            <h3 id="depToArr">Departure to Arrival</h3>
+            <h4 id="depDate">Day Date Month Year</h4>
+            <div id="departingContainer">
+                <div class="flight">
+                    <div class="time">
+                        <span>
+                            <a>6:00am</a>
+                            <br>
+                            <a>CODE - Departure</a>
+                        </span>
+                    </div>
+                    <img src="images/planeside.png" style="filter:brightness(0%); height: 20px;">
+                    <div class="time">
+                        <span>
+                            <a>6:00am</a>
+                            <br>
+                            <a>CODE - Arrival</a>
+                        </span>
+                    </div>
+                    <div class="flightDuration">
+                        <a>Direct flight - 1hr 30min travel</a>
+                    </div>
+                    <div>
+                        <a>from</a>
+                        <a id="price">$100</a>
+                    </div>
+                    <div>
+                        <button id="selectFlightButton" onClick="selectDepartureFlight()">Select Flight</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flightListing" id="returnList">
+            <h2>Returning Flight</h2>
+            <h3 id="arrToDep">Arrival to Departure</h3>
+            <h4 id="arrDate">Day Date Month Year</h4>
+            <div id="returnContainer">
+                <div class="flight">
+                    <div class="time">
+                        <span>
+                            <a>6:00am</a>
+                            <br>
+                            <a>CODE - Arrival</a>
+                        </span>
+                    </div>
+                    <img src="images/planeside.png" style="filter:brightness(0%); height: 20px;">
+                    <div class="time">
+                        <span>
+                            <a>6:00am</a>
+                            <br>
+                            <a>CODE - Departure</a>
+                        </span>
+                    </div>
+                    <div class="flightDuration">
+                        <a>Direct flight - 1hr 30min travel</a>
+                    </div>
+                    <div>
+                        <a>from</a>
+                        <a id="price">$100</a>
+                    </div>
+                    <div>
+                        <button id="selectFlightButton" onClick="selectReturnFlight()">Select Flight</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="submitButton" onClick="submitFlightSelection()">Continue</button>
+    </div>
+    <div class="break_60"></div>
+</body>

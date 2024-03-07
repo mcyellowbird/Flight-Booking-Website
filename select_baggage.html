@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<head>
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <meta charset="utf-8">
+    <title>Flight Booking Website</title>        
+    <link rel="stylesheet" type="text/css" href="css/baggage.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts/baggage.js"></script>
+</head>
+
+<body onload="setup()">
+    <div class="break_60">
+        <input type="image" src="images/favicon.png" onClick='window.location = "index.html";'/>
+    </div>
+    <div class="banner">
+        <div class="flightInfoBar">
+            <div class="activeBar">
+            </div>
+            <div id="activeInfoBar" class="infoBarTextActive" id="selectFlightInfoBar" onclick="console.log(window.location = 'select_flight.html');">
+                <img src="images/planeside.png" height="25px"/>
+                <a>Flights</a>
+            </div>
+            <div class="infoBarTextActive">
+                <img src="images/briefcase.png" height="25px"/>
+                <a>Baggage</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/seat.png" height="25px"/>
+                <a>Seats</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/user.png" height="25px"/>
+                <a>Booking Details</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/dollar.png" height="25px"/>
+                <a>Review & Pay</a>
+            </div>
+        </div>
+    </div>
+    <h3 class="title" id="title">Baggage</h3>
+        
+    <div class="totalCostBar">
+        <span style="font-size: 18px;">Departure Total</span>
+        <br><br>
+        <div class="totalCostContent" style="margin-bottom: 8%; text-align: left; padding-left: 10px;">
+            <a id="totalPassengersDepart"># Passengers</a>
+            <a id="totalBaggageWeightDepart">Baggage Weight: 0kg</a>
+            <span>Baggage Cost: <a id="totalBaggageCostDepart" style="color: #3198ff; font-weight: bold;">$0</a></span>
+            <span>Flight: <a id="totalPriceDisplayDepart" style="color: #3198ff; font-weight: bold;">$0</a></span>
+        </div>
+        <hr>
+        <span style="font-size: 18px;">Return Total</span>
+        <br><br>
+        <div class="totalCostContent" style="text-align: left; padding-left: 10px;">
+            <a id="totalPassengersReturn"># Passengers</a>
+            <a id="totalBaggageWeightReturn">Baggage Weight: 0kg</a>
+            <span>Baggage Cost: <a id="totalBaggageCostReturn" style="color: #3198ff; font-weight: bold;">$0</a></span>
+            <span>Flight: <a id="totalPriceDisplayReturn" style="color: #3198ff; font-weight: bold;">$0</a></span>
+        </div>
+        <hr>
+        <div style="margin-top: 35px;">
+            <span>Total Flight Cost: $<a id="totalFlightCost" style="color: #3198ff; font-weight: bold;">0</a></span>
+        </div>
+    </div>
+    
+    <div class="content" id="container">
+        <div class="break_60"></div>
+        <div class="departingFlight">
+            <h2>Departing Flight</h2>
+            <h3 id="depToArr">Departure to Arrival</h3>
+            <h4 id="depDate">Day Date Month Year</h4>
+            <br>
+            <h2>Checked Baggage</h2>
+            <a>Checked baggage must be checked in before you go to the gate, and will not be carried onto the aircraft.</a>
+            <br>
+            <div class="baggageSelector bSDepart">
+                <div onClick="selectBaggageDep(0,0)">
+                    <img src="images/baggageSelector_None.png" width="40px"/>
+                    <br>
+                    <a>0 kg</a>
+                    <a></a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageDep(15,25)">
+                    <img src="images/baggageSelector_Small.png" width="40px"/>
+                    <br>
+                    <a>15 kg</a>
+                    <a>$25 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageDep(20,27)">
+                    <img src="images/baggageSelector_Medium.png" width="40px"/>
+                    <br>
+                    <a>20 kg</a>
+                    <a>$27 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageDep(30,41)">
+                    <img src="images/baggageSelector_Large.png" width="40px"/>
+                    <br>
+                    <a>30 kg</a>
+                    <a>$41 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageDep(40,54)">
+                    <img src="images/baggageSelector_ExtraLarge.png" width="40px"/>
+                    <br>
+                    <a>40 kg</a>
+                    <a>$54 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+            </div>
+        </div>
+        
+        <div class="returnFlight" id="returnFlight">
+            <h2>Returning Flight</h2>
+            <h3 id="arrToDep">Arrival to Departure</h3>
+            <h4 id="arrDate">Day Date Month Year</h4>
+            <br>
+            <h2>Checked Baggage</h2>
+            <a>Checked baggage must be checked in before you go to the gate, and will not be carried onto the aircraft.</a>
+            <br>
+            <div class="baggageSelector bSReturn">
+                <div onClick="selectBaggageRet(0,0)">
+                    <img src="images/baggageSelector_None.png" width="40px"/>
+                    <br>
+                    <a>0 kg</a>
+                    <a></a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageRet(15,25)">
+                    <img src="images/baggageSelector_Small.png" width="40px"/>
+                    <br>
+                    <a>15 kg</a>
+                    <a>$25 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageRet(20,27)">
+                    <img src="images/baggageSelector_Medium.png" width="40px"/>
+                    <br>
+                    <a>20 kg</a>
+                    <a>$27 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageRet(30,41)">
+                    <img src="images/baggageSelector_Large.png" width="40px"/>
+                    <br>
+                    <a>30 kg</a>
+                    <a>$41 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+                <div onClick="selectBaggageRet(40,54)">
+                    <img src="images/baggageSelector_ExtraLarge.png" width="40px"/>
+                    <br>
+                    <a>40 kg</a>
+                    <a>$54 pp</a>
+                    <br>
+                    <img id="" src="images/radioButtonOff.png"/>
+                </div>
+            </div>
+        </div>
+        <button id="submitButton" onClick="submitFlightSelection()">Continue</button>
+    </div>
+    <div class="break_60"></div>
+<!--
+    <div class="totalCostBar">
+        <div></div>
+    </div>
+-->
+    <div class="break_60"></div>
+</body>

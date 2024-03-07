@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <meta charset="utf-8">
+    <title>Flight Booking Website</title>
+    <link rel="stylesheet" type="text/css" href="css/selectSeat.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts/seatSelection.js"></script>
+</head>
+
+<body onload="setup()">
+    <div class="break_60">
+        <input type="image" src="images/favicon.png" onClick='window.location = "index.html";'/>
+    </div>
+    <div class="banner">
+        <div class="flightInfoBar">
+            <div class="activeBar">
+            </div>
+            <div id="activeInfoBar" class="infoBarTextActive" id="selectFlightInfoBar" onclick="window.location = 'select_flight.html';">
+                <img src="images/planeside.png" height="25px"/>
+                <a>Flights</a>
+            </div>
+            <div id="activeInfoBar" class="infoBarTextActive" id="selectFlightInfoBar" onclick="window.location = 'select_baggage.html';">
+                <img src="images/briefcase.png" height="25px"/>
+                <a>Baggage</a>
+            </div>
+            <div class="infoBarTextActive">
+                <img src="images/seat.png" height="25px"/>
+                <a>Seats</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/user.png" height="25px"/>
+                <a>Booking Details</a>
+            </div>
+            <div class="infoBarText">
+                <img src="images/dollar.png" height="25px"/>
+                <a>Review & Pay</a>
+            </div>
+        </div>
+    </div>
+    <h3 class="title" id="title">Seat Selection</h3>
+    
+    <div class="content" id="container">
+        <div class="break_60"></div>
+        <div class="container">
+        </div>
+    </div>
+    <div class="break_60"></div>
+    
+    <div class="seatSelector" id="departureFlight">
+    </div>
+    
+    <div class="seatSelector" id="returnFlight">
+    </div>
+
+    <span>To Do</span>
+    <ul>
+        <li>Replace Departure Flight Seat Selection with Return Flight Seat Selection once selected seat is submitted</li>
+        <li>Allow for multiple seat selections based on passenger amount</li>
+        <li>Deselect seat on click</li>
+    </ul>
+</body>

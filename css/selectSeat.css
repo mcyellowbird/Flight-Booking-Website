@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
+
+* {
+    font-family: Oxygen;
+    user-select: none;
+}
+
+body {
+    background-color: rgb(238, 245, 255);
+}
+
+input {
+    width: 300px;
+    height: 40px;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    outline: none;
+}
+
+input:focus {
+    border-bottom: 1px solid #3b9cff;
+}
+
+button {
+    color: #3b9cff;
+    font-weight: 700;
+    width: 150px;
+    height: 40px;
+    border: 2px solid #3b9cff;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: transparent;
+    transition: background-color .2s, color .2s;
+}
+
+button:hover {
+    outline: none;
+    cursor: pointer;
+    background-color: #5eaeff;
+    color: white;
+
+}
+
+button:active {
+    outline: none;
+    background-color: #3198ff;
+}
+
+.break_60 {
+    width: 100%;
+    height: 60px;
+}
+
+.banner {
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(129deg, rgba(43, 25, 242, 1) 37%, rgba(59, 156, 255, 1) 49%, rgba(12, 17, 255, 1) 100%);
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    flex-flow: row;
+    align-items: center;
+}
+
+.break_60 input {
+    width: 40px;
+    border: none;
+}
+
+.flightInfoBar {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row;
+    align-items: center;
+
+    background-color: rgb(238, 245, 255);
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+
+    border-radius: 50px;
+    height: 60px;
+    width: 1200px;
+}
+
+.flightInfoBar div:not(:first-child) {
+    display: flex;
+    justify-content: center;
+    flex-flow: row;
+    align-items: center;
+
+    width: 200px;
+    height: 100%;
+    border-radius: 50px;
+}
+
+.activeBar {
+    width: 700px;
+    height: 100%;
+    border-radius: 50px;
+    position: absolute;
+    background: linear-gradient(129deg, rgba(43, 25, 242, 1) 0%, rgba(59, 156, 255, 1) 100%);
+    box-shadow: 0 0 5px rgba(43, 25, 242, 1);
+}
+
+.infoBarText {
+    font-weight: 700;
+}
+
+.infoBarText a {
+    padding-left: 6%;
+}
+
+.infoBarTextActive {
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(129deg, rgba(43, 25, 242, 1) 0%, rgba(59, 156, 255, 1) 100%);
+}
+
+.infoBarTextActive a {
+    padding-left: 6%;
+    filter: brightness(0) invert(1);
+}
+
+.infoBarTextActive img {
+    filter: brightness(0) invert(1);
+}
+
+#activeInfoBar {
+    transition: text-shadow .2s;
+}
+
+#activeInfoBar:hover {
+    text-shadow: 0px 0px 5px white;
+    cursor: pointer;
+}
+
+.title {
+    padding-top: 20px;
+    text-align: center;
+    font-size: 40px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+}
+
+#selectFlightInfoBar {
+    cursor: pointer;
+}
+
+#submitButton {
+    font-weight: 700;
+    font-size: 20px;
+    width: 180px;
+    height: 50px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+.seatSelector {
+    width: 600px;
+    height: 900px;
+
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+
+}
+
+.row {
+    width: 520px;
+    height: 80px;
+
+    align-self: center;
+
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row;
+    align-content: center;
+}
+
+.row:last-of-type {
+    margin-bottom: 40px;
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    margin: auto;
+
+    font-weight: 700;
+
+    background-color: #eaeaea;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: outline .2s, box-shadow .2s;
+    position: relative;
+    text-align: center;
+}
+
+.seat:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.seat:active {
+    box-shadow: 0 0 10px rgba(49, 152, 255, 0.75);
+}
+
+.activeSeat {
+
+    box-shadow: 0 0 10px rgba(49, 152, 255, .75);
+    outline: 2px solid rgba(49, 152, 255, .75);
+}
+
+.seatNumber {
+    line-height: 30px;
+}
+
+.aisle {
+    width: 30px;
+    height: 30px;
+    margin: auto;
+
+    background-color: white;
+}
