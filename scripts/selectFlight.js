@@ -54,7 +54,7 @@ function setup() {
         arrDate.innerHTML = tempDateString;
 
     } else {
-        document.getElementById("returnFlight").style.display = "none";
+        document.getElementById("returnList").style.display = "none";
     }
 
     makeURL();
